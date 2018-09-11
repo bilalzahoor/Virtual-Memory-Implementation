@@ -27,7 +27,9 @@ import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -51,9 +53,12 @@ public class Visual {
 	private Home home;
 	ArrayList<Integer> pageSet;
 	Queue<Integer> index;
+	HashMap<Integer,Integer> hashIndex;
 	private String[] replacementAlgos = { "FIFO", "LRU", "OPT" };
 	private String selectedAlgo=null;
 	JLabel lblPageFaults;
+	private int lruValue=0;
+	JLabel lblNewLabel;
 
 
 	/**
@@ -80,6 +85,7 @@ public class Visual {
 		initialize();
 		pageRefString = new ArrayList<Integer>();
 		index = new LinkedList<Integer>() ;
+		hashIndex=new HashMap<Integer,Integer>();
 		noOfFrames=home.getRamSize()/home.getFrameSize();
 		pageSet = new ArrayList<Integer>(noOfFrames);
 
@@ -132,6 +138,9 @@ public class Visual {
 		lblPageFaults = new JLabel("Page Faults:  0");
 		lblPageFaults.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_2.add(lblPageFaults);
+		
+	 lblNewLabel = new JLabel("New label");
+		panel_2.add(lblNewLabel);
 	}
 
 		void createMap(String start,String end,String insType){
@@ -146,6 +155,7 @@ public class Visual {
 					if (!pageSet.contains(pageRefString.get(referenceIndex))){
 						pageSet.add(pageRefString.get(referenceIndex));
 						index.add(pageRefString.get(referenceIndex));
+						hashIndex.put(pageRefString.get(referenceIndex), referenceIndex);
 					}
 				}
 				else{
@@ -157,8 +167,16 @@ public class Visual {
 						if(selectedAlgo.equals("FIFO")){
 							fifo(referenceIndex);
 						}
-					}
-				}
+						else if(selectedAlgo.equals("LRU")){
+							lru(referenceIndex);
+						
+						}	
+						}
+					hashIndex.put(pageRefString.get(referenceIndex),referenceIndex);
+						
+						}
+					
+				
 				referenceIndex++;
 			}
 		
@@ -187,7 +205,35 @@ public class Visual {
 		pageFaults++;
 		lblPageFaults.setText(Integer.toString(pageFaults));
 		panel_1.revalidate();
+		
 	}
+	void lru(int i){
+		int l=Integer.MAX_VALUE; 
+		int page=-1;
+		Iterator<Integer> it = pageSet.iterator();
+		while(it.hasNext()){
+			int	p = it.next();
+			if(hashIndex.get(p)<l){
+				page =p;
+				l=hashIndex.get(p);
+			}	
+		}
+		try{
+			int pageIndex=pageSet.indexOf(page);
+			pageSet.remove(page);
+			hashIndex.remove(page);
+			pageSet.add(pageIndex,pageRefString.get(i));
+			hashIndex.put(pageRefString.get(i), i);
+			pageFaults++;
+		}catch(Exception ex){
+			lblNewLabel.setText(hashIndex.size()+" "+hashIndex.toString());
+		}
+		lblNewLabel.setText(hashIndex.size()+" "+hashIndex.toString());
+		lblPageFaults.setText(Integer.toString(pageFaults));
+		lblNewLabel.setText(hashIndex.toString());
+		panel_1.revalidate();	
+	}
+	
 	private class Frame extends JPanel{
 		private Frame panel;
 		private JPanel frame;

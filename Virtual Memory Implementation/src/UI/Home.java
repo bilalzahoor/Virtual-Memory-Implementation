@@ -39,9 +39,7 @@ public class Home {
 	public  ArrayList<myPanel> instructions;
 	private int maxValue=0;
 	private JTextField textRam;
-	private JTextField textFrame;
-	//public static JTextField textPage;
-	private static  JTextField textPage;
+	public static JTextField textFrame;
 	private JButton btnAnalyse;
 	private JLabel lblProgramSize;
 	private JTextField textProg;
@@ -54,11 +52,11 @@ public class Home {
 	private JLabel lblStartPage;
 	private JLabel lblDestinationAdress_1;
 
-	public static int getTextPage(){
-		int page= Integer.parseInt(textPage.getText().trim());
+/*	public static int getTextPage(){
+		int page= Integer.parseInt(textFrame.getText().trim());
 		return page;
 	}
-
+*/
 	public int getRamSize(){
 		int  size = Integer.parseInt(textRam.getText());
 		return size;
@@ -167,34 +165,22 @@ public class Home {
 		lblRAMSize.setBounds(10, 45, 79, 14);
 		frame.getContentPane().add(lblRAMSize);
 
-		JLabel lblFrameSize = new JLabel("FRAME SIZE");
+		JLabel lblFrameSize = new JLabel("FRAME/PAGE SIZE");
 		lblFrameSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblFrameSize.setForeground(Color.WHITE);
-		lblFrameSize.setBounds(10, 70, 79, 14);
+		lblFrameSize.setBounds(10, 70, 114, 14);
 		frame.getContentPane().add(lblFrameSize);
 
-		JLabel lblPageSize = new JLabel("PAGE SIZE");
-		lblPageSize.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPageSize.setForeground(Color.WHITE);
-		lblPageSize.setBounds(10, 105, 79, 14);
-		frame.getContentPane().add(lblPageSize);
-
 		textRam = new JTextField();
-		textRam.setBounds(109, 42, 86, 20);
+		textRam.setBounds(134, 42, 86, 20);
 		frame.getContentPane().add(textRam);
 		textRam.setColumns(10);
 
 		textFrame = new JTextField();
 		textFrame.setText("");
-		textFrame.setBounds(109, 70, 86, 20);
+		textFrame.setBounds(134, 67, 86, 20);
 		frame.getContentPane().add(textFrame);
 		textFrame.setColumns(10);
-
-		textPage = new JTextField();
-		textPage.setText("");
-		textPage.setBounds(109, 103, 86, 20);
-		frame.getContentPane().add(textPage);
-		textPage.setColumns(10);
 
 
 		btnAnalyse = new JButton("ANALYSE");
@@ -448,7 +434,7 @@ class myPanel extends JPanel{
 				// TODO Auto-generated method stub
 
 				//String s = Home.textPage.getText().trim();
-				int s= Home.getTextPage();
+				int s= Integer.parseInt(Home.textFrame.getText().trim());
 				String r = textStart.getText().trim();
 				//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
 				if(s !=0 && r.compareTo("")!=0){
@@ -490,7 +476,7 @@ class myPanel extends JPanel{
 					textDPage.setText(Integer.toString(result));
 				}*/
 
-				int s= Home.getTextPage();
+				int  s=Integer.parseInt(Home.textFrame.getText().trim());
 				String r = textDest.getText().trim();
 				//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
 				if(s !=0 && r.compareTo("")!=0){
