@@ -134,52 +134,56 @@ public class Visual {
 		panel_2.setBounds(538, 74, 188, 292);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		frame.getContentPane().add(panel_2);
-		
+
 		lblPageFaults = new JLabel("Page Faults:  0");
 		lblPageFaults.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_2.add(lblPageFaults);
-		
-	 lblNewLabel = new JLabel("New label");
+
+		lblNewLabel = new JLabel("New label");
 		panel_2.add(lblNewLabel);
 	}
 
-		void createMap(String start,String end,String insType){
-			ArrayList<Frame> frames= new ArrayList<Frame>();
-			ViPanel v = new ViPanel();
-			v.lblStartPage.setText(start);
-			v.lblType.setText(insType);	
-			v.lblDestPage.setText(end);
-			panel_1.add(v);
-			while(referenceIndex<pageRefString.size()){
-				if (pageSet.size() < noOfFrames){
-					if (!pageSet.contains(pageRefString.get(referenceIndex))){
-						pageSet.add(pageRefString.get(referenceIndex));
-						index.add(pageRefString.get(referenceIndex));
-						hashIndex.put(pageRefString.get(referenceIndex), referenceIndex);
-					}
+	void createMap(String start,String end,String insType){
+		ArrayList<Frame> frames= new ArrayList<Frame>();
+		ViPanel v = new ViPanel();
+		v.lblStartPage.setText(start);
+		v.lblType.setText(insType);	
+		v.lblDestPage.setText(end);
+		panel_1.add(v);
+		// traverse the page reference  string 
+		while(referenceIndex<pageRefString.size()){
+			//if empty frames exist 
+			if (pageSet.size() < noOfFrames){
+				//if a given page in reference string does not exist in any frame
+				if (!pageSet.contains(pageRefString.get(referenceIndex))){
+					pageSet.add(pageRefString.get(referenceIndex));
+					index.add(pageRefString.get(referenceIndex));
+					hashIndex.put(pageRefString.get(referenceIndex), referenceIndex);
 				}
-				else{
-					if (!pageSet.contains(pageRefString.get(referenceIndex))){
-						if(selectedAlgo == null){
+			}
+
+			else{
+				//No room in frames and the referenced page does not exist in frames i.e page fault occurred 
+				if (!pageSet.contains(pageRefString.get(referenceIndex))){
+					if(selectedAlgo == null){
 						selectedAlgo = (String)JOptionPane.showInputDialog(null, "Choose any Replacement Algorithm", "Page Fault Occured",
 								JOptionPane.ERROR_MESSAGE,null, replacementAlgos, replacementAlgos[0]);
-						}
-						if(selectedAlgo.equals("FIFO")){
-							fifo(referenceIndex);
-						}
-						else if(selectedAlgo.equals("LRU")){
-							lru(referenceIndex);
-						
-						}	
-						}
+					}
+					if(selectedAlgo.equals("FIFO")){
+						fifo(referenceIndex);
+					}
+					else if(selectedAlgo.equals("LRU")){
+						lru(referenceIndex);
+
+					}	
+				}
+				//No room in frames but the referenced page already present in some frame
+				else
 					hashIndex.put(pageRefString.get(referenceIndex),referenceIndex);
-						
-						}
-					
-				
-				referenceIndex++;
 			}
-		
+			referenceIndex++;
+		}
+
 		int pageNo=0;
 		for(int i=0;i<noOfFrames;i++){
 			Frame f = new Frame();
@@ -205,7 +209,7 @@ public class Visual {
 		pageFaults++;
 		lblPageFaults.setText(Integer.toString(pageFaults));
 		panel_1.revalidate();
-		
+
 	}
 	void lru(int i){
 		int l=Integer.MAX_VALUE; 
@@ -218,22 +222,17 @@ public class Visual {
 				l=hashIndex.get(p);
 			}	
 		}
-		try{
-			int pageIndex=pageSet.indexOf(page);
-			pageSet.remove(page);
-			hashIndex.remove(page);
-			pageSet.add(pageIndex,pageRefString.get(i));
-			hashIndex.put(pageRefString.get(i), i);
-			pageFaults++;
-		}catch(Exception ex){
-			lblNewLabel.setText(hashIndex.size()+" "+hashIndex.toString());
-		}
-		lblNewLabel.setText(hashIndex.size()+" "+hashIndex.toString());
+		int pageIndex=pageSet.indexOf(page);
+		pageSet.remove(pageIndex);
+		hashIndex.remove(page);
+		pageSet.add(pageIndex,pageRefString.get(i));
+		hashIndex.put(pageRefString.get(i), i);
+		pageFaults++;
 		lblPageFaults.setText(Integer.toString(pageFaults));
 		lblNewLabel.setText(hashIndex.toString());
 		panel_1.revalidate();	
 	}
-	
+
 	private class Frame extends JPanel{
 		private Frame panel;
 		private JPanel frame;
