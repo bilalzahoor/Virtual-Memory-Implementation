@@ -100,7 +100,7 @@ public class Visual {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 51, 51));
-		frame.setBounds(100, 100, 943, 469);
+		frame.setBounds(100, 100, 1117, 476);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
@@ -118,11 +118,11 @@ public class Visual {
 			public void actionPerformed(ActionEvent arg0) {
 				if(instructionIndex < home.instructions.size()){
 					myPanel  j = home.instructions.get(instructionIndex);	
-					int startPage = Integer.parseInt(j.textSPage.getText());
-					int destPage = Integer.parseInt(j.textDPage.getText());
+					int startPage = Integer.parseInt(j.lblSPage.getText());
+					int destPage = Integer.parseInt(j.lblDPage.getText());
 					pageRefString.add(startPage);
 					pageRefString.add(destPage);
-					createMap(j.textSPage.getText(),j.textDPage.getText(),(String)j.comboBox.getSelectedItem());
+					createMap(j.lblSPage.getText(),j.lblDPage.getText(),(String)j.comboBox.getSelectedItem());
 				}
 			}
 		});
@@ -139,7 +139,7 @@ public class Visual {
 		lblPageFaults.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_2.add(lblPageFaults);
 
-		lblNewLabel = new JLabel("New label");
+		lblNewLabel = new JLabel("");
 		panel_2.add(lblNewLabel);
 	}
 
@@ -303,10 +303,10 @@ public class Visual {
 			instructionTypePanel = new JPanel();
 			instructionPanel.add(instructionTypePanel);
 
-			lblInstructionType = new JLabel("INSTRUCTION TYPE:");
+			lblInstructionType = new JLabel("Instruction Type:");
 			instructionTypePanel.add(lblInstructionType);
 
-			lblType = new JLabel("page 1");
+			lblType = new JLabel("");
 			instructionTypePanel.add(lblType);
 
 			instructionPanel.add(Box.createVerticalStrut(20));
@@ -314,10 +314,10 @@ public class Visual {
 			startPagePanel = new JPanel();
 			instructionPanel.add(startPagePanel);
 
-			lblInstructionPageNo = new JLabel("INSTRUCTION PAGE NO: ");
+			lblInstructionPageNo = new JLabel("Source Page No.: ");
 			startPagePanel.add(lblInstructionPageNo);
 
-			lblStartPage = new JLabel("New label");
+			lblStartPage = new JLabel("");
 
 			startPagePanel.add(lblStartPage);
 			instructionPanel.add(Box.createVerticalStrut(20));
@@ -325,10 +325,10 @@ public class Visual {
 			destinationPagePanel = new JPanel();
 			instructionPanel.add(destinationPagePanel);
 
-			lblDestinationPageNo = new JLabel("DESTINATION PAGE NO:");
+			lblDestinationPageNo = new JLabel("Destination Page No.:");
 			destinationPagePanel.add(lblDestinationPageNo);
 
-			lblDestPage = new JLabel("New label");
+			lblDestPage = new JLabel("");
 			destinationPagePanel.add(lblDestPage);
 			mappingPanel = new JPanel();
 			panel.add(mappingPanel);
