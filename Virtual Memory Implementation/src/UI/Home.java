@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import javax.swing.UIManager;
-import java.awt.Dimension;
 
 public class Home {
 	Home window;
@@ -68,8 +67,8 @@ public class Home {
 	JLabel lblProgSize;
 	private JTextField textField;
 	private JTextField textField_1;
-	private boolean loadFile=false; 
-
+	//private JTextField textField_2;
+	private boolean LoadFile=false;
 	/*	public static int getTextPage(){
 		int page= Integer.parseInt(textFrame.getText().trim());
 		return page;
@@ -119,7 +118,7 @@ public class Home {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		 addInstButton = new JButton("Add Instruction");
+		addInstButton = new JButton("Add Instruction");
 		addInstButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		addInstButton.setBackground(UIManager.getColor("Button.darkShadow"));
 		addInstButton.addActionListener(new ActionListener() {
@@ -142,7 +141,7 @@ public class Home {
 				panel_1.revalidate();
 			}
 		});
-		addInstButton.setBounds(10, 130, 138, 23);
+		addInstButton.setBounds(149, 146, 138, 29);
 		frame.getContentPane().add(addInstButton);
 
 		JButton btnNewButton_1 = new JButton("Delete Instruction");
@@ -160,11 +159,11 @@ public class Home {
 			}
 
 		});
-		btnNewButton_1.setBounds(158, 131, 151, 23);
+		btnNewButton_1.setBounds(314, 146, 159, 28);
 		frame.getContentPane().add(btnNewButton_1);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 192, 699, 208);
+		scrollPane_1.setBounds(10, 218, 699, 208);
 		frame.getContentPane().add(scrollPane_1);
 
 
@@ -177,26 +176,28 @@ public class Home {
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
 
+
+
 		JLabel lblRAMSize = new JLabel(" RAM Size (Bytes)");
 		lblRAMSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblRAMSize.setForeground(Color.WHITE);
-		lblRAMSize.setBounds(10, 45, 152, 14);
+		lblRAMSize.setBounds(10, 70, 152, 14);
 		frame.getContentPane().add(lblRAMSize);
 
 		JLabel lblFrameSize = new JLabel("Frame/Page Size (Bytes)");
 		lblFrameSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblFrameSize.setForeground(Color.WHITE);
-		lblFrameSize.setBounds(10, 70, 152, 14);
+		lblFrameSize.setBounds(10, 107, 152, 14);
 		frame.getContentPane().add(lblFrameSize);
 
 		textRam = new JTextField();
-		textRam.setBounds(172, 42, 86, 20);
+		textRam.setBounds(172, 67, 86, 20);
 		frame.getContentPane().add(textRam);
 		textRam.setColumns(10);
 
 		textFrame = new JTextField();
 		textFrame.setText("");
-		textFrame.setBounds(172, 67, 86, 20);
+		textFrame.setBounds(172, 104, 86, 20);
 		frame.getContentPane().add(textFrame);
 		textFrame.setColumns(10);
 
@@ -217,7 +218,7 @@ public class Home {
 					}	
 					int r = p.getDestinationAddress();
 					if(r!= 0){
-					int val=r;
+						int val=r;
 						if (maxValue < val){
 							maxValue = val;
 						}
@@ -227,19 +228,19 @@ public class Home {
 
 			}
 		});
-		btnAnalyse.setBounds(384, 40, 89, 23);
+		btnAnalyse.setBounds(359, 70, 114, 28);
 		frame.getContentPane().add(btnAnalyse);
 
 		lblProgramSize = new JLabel("Pragram Size (Bytes)");
 		lblProgramSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblProgramSize.setForeground(Color.WHITE);
-		lblProgramSize.setBounds(483, 44, 127, 17);
+		lblProgramSize.setBounds(483, 69, 127, 17);
 		frame.getContentPane().add(lblProgramSize);
 
 		lblRamSize = new JLabel("RAM Size (Bytes)");
 		lblRamSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblRamSize.setForeground(Color.WHITE);
-		lblRamSize.setBounds(483, 70, 127, 14);
+		lblRamSize.setBounds(483, 107, 127, 14);
 		frame.getContentPane().add(lblRamSize);
 
 		btnExecute = new JButton("Execute");
@@ -262,44 +263,44 @@ public class Home {
 		});
 		btnExecute.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnExecute.setBackground(UIManager.getColor("Button.darkShadow"));
-		btnExecute.setBounds(384, 421, 106, 26);
+		btnExecute.setBounds(368, 437, 114, 28);
 		frame.getContentPane().add(btnExecute);
 
-		JLabel lblVirtualMemoryConcept = new JLabel("VIRTUAL MEMORY CONCEPT");
+		JLabel lblVirtualMemoryConcept = new JLabel("VIRTUAL MEMORY CONCEPT (Virtualization)");
 		lblVirtualMemoryConcept.setForeground(Color.WHITE);
 		lblVirtualMemoryConcept.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVirtualMemoryConcept.setFont(new Font("Cambria", Font.BOLD, 18));
-		lblVirtualMemoryConcept.setBounds(145, 11, 330, 20);
+		lblVirtualMemoryConcept.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblVirtualMemoryConcept.setBounds(145, 11, 529, 34);
 		frame.getContentPane().add(lblVirtualMemoryConcept);
 
 		lblStart = new JLabel("Start Adress");
 		lblStart.setForeground(Color.WHITE);
 		lblStart.setHorizontalAlignment(SwingConstants.LEFT);
-		lblStart.setBounds(48, 167, 100, 14);
+		lblStart.setBounds(48, 193, 100, 14);
 		frame.getContentPane().add(lblStart);
 
 		lblInstructionType = new JLabel("Instruction Type");
 		lblInstructionType.setForeground(Color.WHITE);
 		lblInstructionType.setHorizontalAlignment(SwingConstants.LEFT);
-		lblInstructionType.setBounds(172, 167, 115, 14);
+		lblInstructionType.setBounds(172, 193, 115, 14);
 		frame.getContentPane().add(lblInstructionType);
 
 		lblDestinationAdress = new JLabel("Destination Adress");
 		lblDestinationAdress.setForeground(Color.WHITE);
 		lblDestinationAdress.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDestinationAdress.setBounds(290, 167, 126, 14);
+		lblDestinationAdress.setBounds(297, 193, 126, 14);
 		frame.getContentPane().add(lblDestinationAdress);
 
 		lblStartPage = new JLabel("Start Page");
 		lblStartPage.setForeground(Color.WHITE);
 		lblStartPage.setHorizontalAlignment(SwingConstants.LEFT);
-		lblStartPage.setBounds(443, 167, 79, 14);
+		lblStartPage.setBounds(445, 193, 79, 14);
 		frame.getContentPane().add(lblStartPage);
 
 		lblDestinationAdress_1 = new JLabel("Destination Page");
 		lblDestinationAdress_1.setForeground(Color.WHITE);
 		lblDestinationAdress_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDestinationAdress_1.setBounds(559, 167, 115, 14);
+		lblDestinationAdress_1.setBounds(559, 193, 115, 14);
 		frame.getContentPane().add(lblDestinationAdress_1);
 
 		btnSave = new JButton("Save");
@@ -322,8 +323,8 @@ public class Home {
 							else
 								line = line+ " " + "1";
 							line = line+ " " + Integer.toString(instructions.get(i).getDestinationAddress());
-						//	line =line + " " + instructions.get(i).textSPage.getText();
-						//	line = line + " " + instructions.get(i).textDPage.getText();
+							//	line =line + " " + instructions.get(i).textSPage.getText();
+							//	line = line + " " + instructions.get(i).textDPage.getText();
 							line =line + " " + instructions.get(i).lblSPage.getText();
 							line = line + " " + instructions.get(i).lblDPage.getText();
 
@@ -335,9 +336,9 @@ public class Home {
 				}
 			}
 		});
-		btnSave.setBounds(250, 421, 114, 28);
+		btnSave.setBounds(244, 437, 114, 28);
 		frame.getContentPane().add(btnSave);
-		
+
 		btnLoadFile = new JButton(" Load File");
 		btnLoadFile.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnLoadFile.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -347,7 +348,7 @@ public class Home {
 				if (fileChooser.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
 					try {
-						
+
 						readLine = new BufferedReader(new FileReader(file));
 						String line;
 						instructions.clear();
@@ -377,17 +378,17 @@ public class Home {
 									r.comboBox.setSelectedItem("Read/Write");
 								else
 									r.comboBox.setSelectedItem("GOTO");
-								
+
 								r.setDestinationAddress(words[2]);
 								r.lblSPage.setText(words[3]);
 								r.lblDPage.setText(words[4]);
 								instructions.add(r);
 								panel_1.revalidate();
-								
-								
+
+
 							}
-							
-	
+
+
 						}
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
@@ -396,23 +397,22 @@ public class Home {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					
+
+
 				}
 			}
 		});
-		btnLoadFile.setBounds(10, 95, 106, 23);
+		btnLoadFile.setBounds(23, 146, 114, 28);
 		frame.getContentPane().add(btnLoadFile);
-		
+
 		lblProgSize = new JLabel("");
-		
 		lblProgSize.setForeground(Color.WHITE);
-		lblProgSize.setBounds(623, 45, 86, 14);
+		lblProgSize.setBounds(623, 70, 86, 14);
 		frame.getContentPane().add(lblProgSize);
-		
+
 		lblRam = new JLabel("");
 		lblRam.setForeground(Color.WHITE);
-		lblRam.setBounds(620, 67, 89, 14);
+		lblRam.setBounds(620, 107, 89, 14);
 		frame.getContentPane().add(lblRam);
 	}
 }
@@ -426,6 +426,8 @@ class myPanel extends JPanel{
 	public JComboBox comboBox;
 	public JLabel lblSPage;
 	public JLabel lblDPage;
+	//public JTextField textSPage;
+	//public JTextField textDPage;
 
 	myPanel panel;
 
@@ -477,9 +479,6 @@ class myPanel extends JPanel{
 		panel.add(checkBox);
 
 		textStart = new JTextField();
-
-
-
 		textStart.addFocusListener(new FocusListener(){
 
 
@@ -490,7 +489,7 @@ class myPanel extends JPanel{
 
 
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
+				/*// TODO Auto-generated method stub
 				int  s=Integer.parseInt(Home.textFrame.getText().trim());
 				String r = textStart.getText().trim();
 				//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
@@ -500,8 +499,8 @@ class myPanel extends JPanel{
 					int start= Integer.parseInt(r);
 
 					int result=start/page;
-					lblSPage.setText(Integer.toString(result));
-				}
+					//lblSPage.setText(Integer.toString(result));*/
+			//	}
 
 
 			}
@@ -525,7 +524,19 @@ class myPanel extends JPanel{
 
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				int  s=Integer.parseInt(Home.textFrame.getText().trim());
+				String r = textStart.getText().trim();
+				//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
+				if(s !=0 && r.compareTo("")!=0){
+					//int page=Integer.parseInt(s);
+					int page = s ;
+					int start= Integer.parseInt(r);
+
+					int result=start/page;
+					lblSPage.setText(Integer.toString(result));
+
+
+	}
 			}
 
 
@@ -541,6 +552,18 @@ class myPanel extends JPanel{
 
 					int result=start/page;
 					lblDPage.setText(Integer.toString(result));
+			
+					/*int  st=Integer.parseInt(Home.textFrame.getText().trim());
+					String rt = textstart.getText().trim();
+					//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
+					if(s !=0 && r.compareTo("")!=0){
+						//int page=Integer.parseInt(s);
+						int pagee = s ;
+						int startt= Integer.parseInt(r);
+
+						int resultt=start/page;
+						lblSPage.setText(Integer.toString(result));
+				}*/
 				}
 			}
 
@@ -550,22 +573,27 @@ class myPanel extends JPanel{
 
 		panel.add(textDest);
 		textDest.setColumns(10);
-		panel.add(Box.createHorizontalStrut(50));
+		panel.add(Box.createHorizontalStrut(10));
 
 
+		/*textSPage = new JTextField();
+		textSPage.setEditable(false);
+		panel.add(textSPage);
+		textSPage.setColumns(10);
+		panel.add(Box.createHorizontalStrut(10));*/
+		
 		lblSPage = new JLabel();
 		
 		//lblSPage.setBounds(0, 0, 135, 14);
 		panel.add(lblSPage);
-		panel.add(Box.createHorizontalStrut(90));
+		panel.add(Box.createHorizontalStrut(80));
 
 		lblSPage.addFocusListener(new FocusListener(){
 
-
-			public void focusGained(FocusEvent arg0) {
+					public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 
-				
+
 				/*int s= Integer.parseInt(Home.textFrame.getText().trim());
 				String r = textStart.getText().trim();
 				//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
@@ -577,10 +605,20 @@ class myPanel extends JPanel{
 					int result=start/page;
 					lblSPage.setText(Integer.toString(result));
 				}*/
+						/*int  s=Integer.parseInt(Home.textFrame.getText().trim());
+						String r = textStart.getText().trim();
+						//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
+						if(s !=0 && r.compareTo("")!=0){
+							//int page=Integer.parseInt(s);
+							int page = s ;
+							int start= Integer.parseInt(r);
+
+							int result=start/page;
+							lblSPage.setText(Integer.toString(result));
 
 
-			}
-
+			}*/
+					}
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 
@@ -588,11 +626,17 @@ class myPanel extends JPanel{
 
 		});
 
-
+	/*	textDPage = new JTextField();
+		textDPage.setEditable(false);
+		panel.add(textDPage);
+		textDPage.setColumns(10);
+		textDPage.addFocusListener(new FocusListener(){*/
 
 		lblDPage = new JLabel();
 		panel.add(lblDPage);
 		//lblDPage.setColumns(10);
+		//lblDPage.add(Box.createHorizontalStrut(90));
+
 		lblDPage.addFocusListener(new FocusListener(){
 
 
