@@ -1,0 +1,12 @@
+{
+  "C:\\Users\\Ibn Zahoor\\Documents\\GitHub\\Virtual-Memory-Implementation\\Virtual Memory Implementation\\src": {
+    "location": "C:\\Users\\Ibn Zahoor\\Documents\\GitHub\\Virtual-Memory-Implementation\\Virtual Memory Implementation\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Users\\Ibn Zahoor\\Documents\\GitHub\\Virtual-Memory-Implementation\\Virtual Memory Implementation\\src\u0027. Skipped."
+  },
+  "C:\\Program Files\\Java\\jdk1.8.0_92\\jre\\lib\\rt.jar": {
+    "location": "C:\\Program Files\\Java\\jdk1.8.0_92\\jre\\lib\\rt.jar",
+    "status": "UNRESOLVED",
+    "error": "Could not transfer artifact jre:jre:zip:call:1.0.0 from/to remote-models (http://download.eclipse.org/recommenders/models/kepler/): Error transferring file, server returned status code 307"
+  }
+}

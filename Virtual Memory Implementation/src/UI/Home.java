@@ -45,7 +45,7 @@ public class Home {
 	JPanel panel;
 	private JPanel panel_1;
 	public static ArrayList<JPanel> selectedRows;
-	public  ArrayList<myPanel> instructions;
+	public ArrayList<MyPanel> instructions;
 	private int maxValue=0;
 	private JTextField textRam;
 	public static JTextField textFrame;
@@ -105,7 +105,7 @@ public class Home {
 		window = this;
 		initialize();
 		selectedRows = new ArrayList<JPanel>();
-		instructions=new ArrayList<myPanel>();
+		instructions=new ArrayList<MyPanel>();
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Home {
 		addInstButton.setBackground(UIManager.getColor("Button.darkShadow"));
 		addInstButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				myPanel r = new myPanel();
+				MyPanel r = new MyPanel();
 				panel_1.add(r);
 				if(instructions.size()!=0){
 
@@ -208,7 +208,7 @@ public class Home {
 		btnAnalyse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				lblRam.setText(textRam.getText());
-				for(myPanel p:instructions){
+				for(MyPanel p:instructions){
 					int s = p.getStartAddress();
 					if(s!=0){
 						int val=s;
@@ -225,7 +225,6 @@ public class Home {
 					}
 				}
 				lblProgSize.setText(Integer.toString(maxValue));
-
 			}
 		});
 		btnAnalyse.setBounds(359, 70, 114, 28);
@@ -250,6 +249,7 @@ public class Home {
 				try
 				{
 					Visual frame = new Visual(window);
+					frame.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.frame.setVisible(true);
 				}
 				catch (Exception ex)
@@ -323,10 +323,8 @@ public class Home {
 							else
 								line = line+ " " + "1";
 							line = line+ " " + Integer.toString(instructions.get(i).getDestinationAddress());
-							//	line =line + " " + instructions.get(i).textSPage.getText();
-							//	line = line + " " + instructions.get(i).textDPage.getText();
-							line =line + " " + instructions.get(i).lblSPage.getText();
-							line = line + " " + instructions.get(i).lblDPage.getText();
+							line =line + " " + instructions.get(i).getStartPage();
+							line = line + " " + instructions.get(i).getDestinationPage();
 
 							f.println(line);		
 						}
@@ -352,6 +350,11 @@ public class Home {
 						readLine = new BufferedReader(new FileReader(file));
 						String line;
 						instructions.clear();
+						for(JPanel p:selectedRows){
+							panel_1.remove(p);
+							panel_1.revalidate();
+						}
+						maxValue = 0;
 						while( (line = readLine.readLine() ) != null){
 							String[] words= line.split(" ");
 							if(words.length == 2){
@@ -359,36 +362,19 @@ public class Home {
 								textFrame.setText(words[1]);
 							}
 							else{
-								myPanel r = new myPanel();
-								panel_1.add(r);
-								/*if(instructions.size()!=0){
-
-									int s = instructions.get(instructions.size()-1).getStartAddress();
-
-									if(s != 0){
-
-										int val = s;
-										val++;	
-
-										r.setStartAddress(Integer.toString(val));
-									}
-								}*/
-								r.setStartAddress(words[0]);
+								MyPanel myPanel = new MyPanel();
+								panel_1.add(myPanel);
+								myPanel.setStartAddress(words[0]);
 								if(words[1].equals("0"))
-									r.comboBox.setSelectedItem("Read/Write");
+									myPanel.comboBox.setSelectedItem("Read/Write");
 								else
-									r.comboBox.setSelectedItem("GOTO");
-
-								r.setDestinationAddress(words[2]);
-								r.lblSPage.setText(words[3]);
-								r.lblDPage.setText(words[4]);
-								instructions.add(r);
+									myPanel.comboBox.setSelectedItem("GoTo");
+								myPanel.setDestinationAddress(words[2]);
+								myPanel.setStartPage((words[3]));
+								myPanel.setDestinationPage(words[4]);
+								instructions.add(myPanel);
 								panel_1.revalidate();
-
-
 							}
-
-
 						}
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
@@ -416,50 +402,46 @@ public class Home {
 		frame.getContentPane().add(lblRam);
 	}
 }
-class myPanel extends JPanel{
+class MyPanel extends JPanel{
 
 	private JTextField textStart;
 	private JTextField textDest;
-	//public JTextField textSPage;
-	//public JTextField textDPage;
 	private JCheckBox checkBox;
 	public JComboBox comboBox;
-	public JLabel lblSPage;
-	public JLabel lblDPage;
-	//public JTextField textSPage;
-	//public JTextField textDPage;
-
-	myPanel panel;
-
+	private JLabel lblSPage;
+	private JLabel lblDPage;
+	MyPanel panel;
 
 	public int getStartAddress(){
-		int sadress= Integer.parseInt(textStart.getText().trim());
-		return sadress;
+		return  Integer.parseInt(textStart.getText().trim());
 	}
 	public void setStartAddress(String s){
 		textStart.setText(s);
 	}
 
 	public int getDestinationAddress(){
-		int dAdress= Integer.parseInt(textDest.getText().trim());
-		return dAdress;
+		return Integer.parseInt(textDest.getText().trim());
 	}
 	public void setDestinationAddress(String r){
 		textDest.setText(r);
 	}
 
-	/*public int getStartPage(){
-	    int sPage= Integer.parseInt(textSPage.getText().trim());
-		return sPage;
+	public int getStartPage(){
+		return Integer.parseInt(lblSPage.getText().trim());
 	}
 	public void setStartPage(String sp){
-	    textSPage.setText(sp);
-	}*/
+		lblSPage.setText(sp);
+	}
+	public int getDestinationPage(){
+		return Integer.parseInt(lblDPage.getText().trim());
+	}
+	public void setDestinationPage(String sp){
+		lblDPage.setText(sp);
+	}
 
-	myPanel(){
+	MyPanel(){
 		super();
 		panel=this;
-		//1024instructionIndex++;
 		checkBox = new JCheckBox();
 		checkBox.addItemListener(new ItemListener(){
 
@@ -500,7 +482,7 @@ class myPanel extends JPanel{
 
 					int result=start/page;
 					//lblSPage.setText(Integer.toString(result));*/
-			//	}
+				//	}
 
 
 			}
@@ -536,7 +518,7 @@ class myPanel extends JPanel{
 					lblSPage.setText(Integer.toString(result));
 
 
-	}
+				}
 			}
 
 
@@ -552,7 +534,7 @@ class myPanel extends JPanel{
 
 					int result=start/page;
 					lblDPage.setText(Integer.toString(result));
-			
+
 					/*int  st=Integer.parseInt(Home.textFrame.getText().trim());
 					String rt = textstart.getText().trim();
 					//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
@@ -581,16 +563,16 @@ class myPanel extends JPanel{
 		panel.add(textSPage);
 		textSPage.setColumns(10);
 		panel.add(Box.createHorizontalStrut(10));*/
-		
+
 		lblSPage = new JLabel();
-		
+
 		//lblSPage.setBounds(0, 0, 135, 14);
 		panel.add(lblSPage);
 		panel.add(Box.createHorizontalStrut(80));
 
 		lblSPage.addFocusListener(new FocusListener(){
 
-					public void focusGained(FocusEvent arg0) {
+			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 
 
@@ -605,7 +587,7 @@ class myPanel extends JPanel{
 					int result=start/page;
 					lblSPage.setText(Integer.toString(result));
 				}*/
-						/*int  s=Integer.parseInt(Home.textFrame.getText().trim());
+				/*int  s=Integer.parseInt(Home.textFrame.getText().trim());
 						String r = textStart.getText().trim();
 						//if(s.compareTo("")!=0 && r.compareTo("")!=0){ 
 						if(s !=0 && r.compareTo("")!=0){
@@ -618,7 +600,7 @@ class myPanel extends JPanel{
 
 
 			}*/
-					}
+			}
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 
@@ -626,7 +608,7 @@ class myPanel extends JPanel{
 
 		});
 
-	/*	textDPage = new JTextField();
+		/*	textDPage = new JTextField();
 		textDPage.setEditable(false);
 		panel.add(textDPage);
 		textDPage.setColumns(10);
@@ -674,6 +656,7 @@ class myPanel extends JPanel{
 		});
 
 	}
+
 
 }
 
