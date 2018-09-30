@@ -43,6 +43,8 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.SystemColor;
+
+import javax.swing.DefaultComboBoxModel;
 public class Visual {
 	public JFrame frame;
 	private JPanel panel;
@@ -81,11 +83,20 @@ public class Visual {
 	private JPanel referenceStringPanel;
 	private ArrayList<JLabel> referenceStringList;
 	private JPanel referenceStringParentPanel;
-	private JScrollPane scrollPane_1;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_5;
 	private JScrollPane scrollPane_2;
 	private JScrollPane scrollPane_3;
+	private JPanel algoSelectionPanel;
+	private JScrollPane scrollPane_1;
+	private JButton btnRun;
+	private JComboBox<String> comboBoxAlgo; 
+	private JPanel panel_1;
+	private JLabel lblNewLabel_9;
+	private JPanel panel_2;
+	private JLabel lblNewLabel_10;
+	private JLabel lblNewLabel_11;
+	private Component horizontalStrut_3;
 
 
 
@@ -134,7 +145,7 @@ public class Visual {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(0, 51, 51));
+		frame.getContentPane().setBackground(new Color(47, 79, 79));
 		frame.setBounds(100, 100, 1185, 611);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -154,54 +165,7 @@ public class Visual {
 		btnEnterNextInstruction.setBackground(SystemColor.textHighlight);
 		btnEnterNextInstruction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if(pc < home.instructions.size()){
-					MyPanel  myPanel = home.instructions.get(pc);
-					int startPage = myPanel.getStartPage();
-					int destPage = myPanel.getDestinationPage();
-					String type= (String)myPanel.comboBox.getSelectedItem();
-					// if two pages are referenced in a single instruction
-					if(startPage!=destPage){
-						referenceString.add(startPage);
-						addPageInReferenceString(startPage);
-						referenceString.add(destPage);
-						addPageInReferenceString(destPage);
-					}
-					else{
-						referenceString.add(startPage);
-						addPageInReferenceString(startPage);		
-					}
-					for(JLabel l:referenceStringList)
-						l.setOpaque(false);
-					referenceStringList.get(referenceStringList.size()-1).setOpaque(true);
-					createMap(Integer.toString(startPage),Integer.toString(destPage),type);
-					if(isJumpInstruction){
-						isJumpInstruction=false;
-						pc=returnInstructionIndex;
-
-					}
-					else if(type.equals("GoTo")){
-						// save address of next instruction to be executed
-						returnInstructionIndex=pc+1;
-						int destAdd = myPanel.getDestinationAddress();
-						for(MyPanel p:home.instructions){
-							if(p.getStartAddress() == destAdd){
-								// load pc with the address of new instruction
-								pc = home.instructions.indexOf(p);
-								isJumpInstruction =true;
-								break;
-							}
-						}
-					}
-
-					else{
-						pc++;
-					}
-					JPanel line = new JPanel();
-					line.setPreferredSize(new Dimension(100, 2));
-					line.setBorder(new LineBorder(new Color(0, 0, 0), 2, false));
-					parentPanel.add(line);
-				}
+				executeInstruction();
 			}
 		});
 
@@ -210,7 +174,7 @@ public class Visual {
 
 		lblPageFaults = new JLabel("Page Faults:  0");
 		lblPageFaults.setForeground(new Color(255, 0, 0));
-		lblPageFaults.setBounds(789, 166, 129, 30);
+		lblPageFaults.setBounds(807, 161, 129, 30);
 		frame.getContentPane().add(lblPageFaults);
 		lblPageFaults.setFont(new Font("Tahoma", Font.BOLD, 16));
 
@@ -240,6 +204,7 @@ public class Visual {
 		frame.getContentPane().add(scrollPane_3);
 
 		JPanel logicalSpacePanel = new JPanel();
+		logicalSpacePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		scrollPane_3.setViewportView(logicalSpacePanel);
 		logicalSpacePanel.setLayout(new BoxLayout(logicalSpacePanel, BoxLayout.X_AXIS));
 
@@ -251,11 +216,11 @@ public class Visual {
 
 
 		JPanel panel_6 = new JPanel();
-		panel_6.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_6.setBorder(null);
 		panel_6.setBackground(new Color(47, 79, 79));
 		FlowLayout flowLayout = (FlowLayout) panel_6.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_6.setBounds(73, 65, 405, 30);
+		panel_6.setBounds(73, 60, 405, 30);
 		frame.getContentPane().add(panel_6);
 
 		panel_3 = new JPanel();
@@ -267,6 +232,7 @@ public class Visual {
 		panel_6.add(lblNewLabel_1);
 		lblNewLabel_1.setForeground(new Color(240, 255, 255));
 		lblNewLabel_1.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+		panel_6.add(Box.createHorizontalStrut(20));
 
 		panel_4 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_4.getLayout();
@@ -279,9 +245,10 @@ public class Visual {
 		panel_6.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
 		lblNewLabel_2.setForeground(new Color(240, 255, 255));
+		panel_6.add(Box.createHorizontalStrut(20));
 
 		panel_5 = new JPanel();
-		panel_5.setBackground(Color.BLUE);
+		panel_5.setBackground(new Color(0, 250, 154));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_5.getLayout();
 		flowLayout_2.setVgap(10);
 		flowLayout_2.setHgap(10);
@@ -293,7 +260,7 @@ public class Visual {
 		lblNewLabel_3.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
 
 		panel_7 = new JPanel();
-		panel_7.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_7.setBorder(null);
 		panel_7.setBackground(new Color(47, 79, 79));
 		panel_7.setForeground(new Color(47, 79, 79));
 		panel_7.setBounds(73, 109, 405, 33);
@@ -312,6 +279,7 @@ public class Visual {
 		label.setForeground(Color.CYAN);
 		label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panel_7.add(label);
+		panel_7.add(Box.createHorizontalStrut(20));
 		//lblNewLabel_4.add(Box.createHorizontalStrut(60));
 		//lblNewLabel_4.add(Box.createHorizontalGlue( ));
 
@@ -333,17 +301,6 @@ public class Visual {
 		lblReferencedPages.setBounds(10, 165, 129, 21);
 		frame.getContentPane().add(lblReferencedPages);
 
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(139, 163, 648, 34);
-		frame.getContentPane().add(scrollPane_1);
-
-		referenceStringParentPanel = new JPanel();
-		scrollPane_1.setViewportView(referenceStringParentPanel);
-		referenceStringParentPanel.setLayout(new BoxLayout(referenceStringParentPanel, BoxLayout.X_AXIS));
-		referenceStringPanel = new JPanel();
-		referenceStringParentPanel.add(referenceStringPanel);
-		referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
-
 		lblNewLabel = new JLabel("<html>Physical<br>Address Space</html>");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setForeground(Color.WHITE);
@@ -355,6 +312,94 @@ public class Visual {
 		lblNewLabel_5.setForeground(Color.WHITE);
 		lblNewLabel_5.setBounds(1027, 237, 90, 30);
 		frame.getContentPane().add(lblNewLabel_5);
+
+		referenceStringParentPanel = new JPanel();
+		referenceStringParentPanel.setBounds(141, 148, 646, 50);
+		frame.getContentPane().add(referenceStringParentPanel);
+		referenceStringParentPanel.setLayout(new BoxLayout(referenceStringParentPanel, BoxLayout.X_AXIS));
+
+		scrollPane_1 = new JScrollPane();
+		referenceStringParentPanel.add(scrollPane_1);
+		referenceStringPanel = new JPanel();
+		scrollPane_1.setViewportView(referenceStringPanel);
+		referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
+
+		algoSelectionPanel = new JPanel();
+		algoSelectionPanel.setBounds(589, 114, 400, 30);
+		frame.getContentPane().add(algoSelectionPanel);
+		algoSelectionPanel.setLayout(new BoxLayout(algoSelectionPanel, BoxLayout.X_AXIS));
+
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		algoSelectionPanel.add(horizontalStrut_2);
+
+		JLabel lblNewLabel_8 = new JLabel("Page Replacement Algorithm");
+		algoSelectionPanel.add(lblNewLabel_8);
+
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		algoSelectionPanel.add(horizontalStrut);
+
+		comboBoxAlgo = new JComboBox<String>();
+		comboBoxAlgo.setMaximumSize(new Dimension(80, 40));
+		comboBoxAlgo.setModel(new DefaultComboBoxModel<String>(new String[] {"FIFO", "LRU", "OPT"}));
+		algoSelectionPanel.add(comboBoxAlgo);
+
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		algoSelectionPanel.add(horizontalStrut_1);
+
+		btnRun = new JButton("Run");
+		btnRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pc=0;
+				returnInstructionIndex=0;
+				referenceIndex=0;
+				isJumpInstruction=false;
+				referenceString.clear();
+				referenceStringPanel.removeAll();
+				pageSet.clear();
+				index.clear();
+				hashIndex.clear();
+				physicalFrames.clear();
+				physicalPanel.removeAll();
+				createPhysicalAddSpace();
+				lblPageFaults.setText("Page Faults:  0");
+				pageFaults=0;
+				selectedAlgo=comboBoxAlgo.getSelectedItem().toString();
+				parentPanel.removeAll();
+				parentPanel.revalidate();
+				btnRun.setEnabled(false);
+			}
+		});
+		btnRun.setForeground(Color.WHITE);
+		btnRun.setBackground(SystemColor.textHighlight);
+		algoSelectionPanel.add(btnRun);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(983, 33, 186, 80);
+		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
+		panel_2 = new JPanel();
+		panel_1.add(panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		
+		lblNewLabel_10 = new JLabel("Algorithm");
+		panel_2.add(lblNewLabel_10);
+		lblNewLabel_10.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		horizontalStrut_3 = Box.createHorizontalStrut(60);
+		panel_2.add(horizontalStrut_3);
+		
+		lblNewLabel_11 = new JLabel("PageFaults");
+		panel_2.add(lblNewLabel_11);
+		lblNewLabel_11.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
+		lblNewLabel_9 = new JLabel("Statistics");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_9.setForeground(Color.WHITE);
+		lblNewLabel_9.setBounds(1040, 15, 92, 17);
+		frame.getContentPane().add(lblNewLabel_9);
+		algoSelectionPanel.setVisible(false);
 		for(int i:referenceString){
 			JLabel page = new JLabel(Integer.toString(i));
 			page.setMinimumSize(new Dimension(30,30));
@@ -365,22 +410,8 @@ public class Visual {
 			referenceStringPanel.add(Box.createHorizontalStrut(20));
 			referenceStringPanel.add(page);	
 		}
-		for(int i=0;i<noOfFrames;i++){
-
-			JPanel pan = new JPanel();
-			pan.setBackground(Color.GREEN);
-			pan.setBorder(new LineBorder(new Color(0, 0, 0)));
-			physicalPanel.add(pan);
-			pan.setLayout(new BoxLayout(pan, BoxLayout.X_AXIS));
-			JLabel lbl = new JLabel();
-			lbl.setMinimumSize(new Dimension(100,20));
-			lbl.setMaximumSize(new Dimension(100,20));
-			lbl.setPreferredSize(new Dimension(100,20));
-			lbl.setHorizontalAlignment(JLabel.CENTER);
-			pan.add(lbl);
-			physicalFrames.add(pan);
-		}
-
+		
+		createPhysicalAddSpace();
 		for(int i=noOfPages-1;i>=0;i--){
 			JPanel pan1 = new JPanel();
 			pan1.setBackground(Color.CYAN);
@@ -396,6 +427,77 @@ public class Visual {
 		}
 
 	}
+	void createPhysicalAddSpace(){
+		for(int i=0;i<noOfFrames;i++){
+
+			JPanel pan = new JPanel();
+			pan.setBackground(Color.GREEN);
+			pan.setBorder(new LineBorder(new Color(0, 0, 0)));
+			physicalPanel.add(pan);
+			pan.setLayout(new BoxLayout(pan, BoxLayout.X_AXIS));
+			JLabel lbl = new JLabel();
+			lbl.setMinimumSize(new Dimension(100,20));
+			lbl.setMaximumSize(new Dimension(100,20));
+			lbl.setPreferredSize(new Dimension(100,20));
+			lbl.setHorizontalAlignment(JLabel.CENTER);
+			pan.add(lbl);
+			physicalFrames.add(pan);
+		}
+	}
+	void executeInstruction(){
+		if(pc < home.instructions.size()){
+			MyPanel  myPanel = home.instructions.get(pc);
+			int startPage = myPanel.getStartPage();
+			int destPage = myPanel.getDestinationPage();
+			String type= (String)myPanel.comboBox.getSelectedItem();
+			// if two pages are referenced in a single instruction
+			if(startPage!=destPage){
+				referenceString.add(startPage);
+				addPageInReferenceString(startPage);
+				referenceString.add(destPage);
+				addPageInReferenceString(destPage);
+			}
+			else{
+				referenceString.add(startPage);
+				addPageInReferenceString(startPage);		
+			}
+			for(JLabel l:referenceStringList)
+				l.setOpaque(false);
+			referenceStringList.get(referenceStringList.size()-1).setOpaque(true);
+			referenceStringParentPanel.revalidate();
+			createMap(Integer.toString(startPage),Integer.toString(destPage),type);
+			if(isJumpInstruction){
+				isJumpInstruction=false;
+				pc=returnInstructionIndex;
+
+			}
+			else if(type.equals("GoTo")){
+				// save address of next instruction to be executed
+				returnInstructionIndex=pc+1;
+				int destAdd = myPanel.getDestinationAddress();
+				for(MyPanel p:home.instructions){
+					if(p.getStartAddress() == destAdd){
+						// load pc with the address of new instruction
+						pc = home.instructions.indexOf(p);
+						isJumpInstruction =true;
+						break;
+					}
+				}
+			}
+
+			else{
+				pc++;
+			}
+			JPanel line = new JPanel();
+			line.setPreferredSize(new Dimension(100, 2));
+			line.setBorder(new LineBorder(new Color(0, 0, 0), 2, false));
+			parentPanel.add(line);
+		}
+		else{
+			((JButton)algoSelectionPanel.getComponent(5)).setEnabled(true);
+		}
+
+	}
 	void addPageInReferenceString(int pageNo){
 		JLabel page = new JLabel(Integer.toString(pageNo));
 		page.setMinimumSize(new Dimension(30,30));
@@ -408,6 +510,7 @@ public class Visual {
 		referenceStringList.add(page);
 		referenceStringPanel.revalidate();
 	}
+	@SuppressWarnings("unchecked")
 	void createMap(String start,String end,String insType){
 		ArrayList<Frame> frames= new ArrayList<Frame>();
 		InstructionPanel instPanel = new InstructionPanel();
@@ -435,6 +538,9 @@ public class Visual {
 					if(selectedAlgo == null){
 						selectedAlgo = (String)JOptionPane.showInputDialog(null, "Choose any Replacement Algorithm ", "Page Fault Occured",
 								JOptionPane.INFORMATION_MESSAGE,null, replacementAlgos, replacementAlgos[0]);
+						algoSelectionPanel.setVisible(true);
+						((JComboBox<String>)algoSelectionPanel.getComponent(3)).setSelectedItem(selectedAlgo);
+						((JButton)algoSelectionPanel.getComponent(5)).setEnabled(false);
 					}
 					if(selectedAlgo.equals("FIFO")){
 						fifo(referenceIndex);
@@ -445,8 +551,9 @@ public class Visual {
 					}	
 				}
 				//No room in frames but the referenced page already present in some frame
-				else
+				else{
 					hashIndex.put(referenceString.get(referenceIndex),referenceIndex);
+				}
 			}
 			referenceIndex++;
 		}

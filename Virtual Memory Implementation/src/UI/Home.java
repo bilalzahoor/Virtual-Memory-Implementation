@@ -350,10 +350,8 @@ public class Home {
 						readLine = new BufferedReader(new FileReader(file));
 						String line;
 						instructions.clear();
-						for(JPanel p:selectedRows){
-							panel_1.remove(p);
+							panel_1.removeAll();
 							panel_1.revalidate();
-						}
 						maxValue = 0;
 						while( (line = readLine.readLine() ) != null){
 							String[] words= line.split(" ");
