@@ -66,7 +66,6 @@ public class Visual {
 	private HashMap<Integer,Integer> hashIndex;
 	private String[] replacementAlgos = { "FIFO", "LRU", "OPT" };
 	private String selectedAlgo=null;
-	private JLabel lblPageFaults;
 	private int lruValue=0;
 	private JPanel panel_3;
 	private JPanel panel_4;
@@ -97,6 +96,19 @@ public class Visual {
 	private JLabel lblNewLabel_10;
 	private JLabel lblNewLabel_11;
 	private Component horizontalStrut_3;
+	private Component horizontalStrut_4;
+	private JLabel lblNewLabel_12;
+	private JPanel panel_8;
+	private int noOfHits=0;
+	private JLabel lblFIFOPageFault;
+	private JPanel panel_9;
+	private JLabel lblNewLabel_15;
+	private Component horizontalStrut_7;
+	private JLabel lblNewLabel_16;
+	private Component horizontalStrut_8;
+	private JLabel lblLRUPageFault;
+	private JLabel lblFIFOPageHits;
+	private JLabel lblLRUPageHits;
 
 
 
@@ -107,8 +119,7 @@ public class Visual {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Visual window = new Visual();
-
+					Visual window = new Visual(null);
 					window.frame.setVisible(true);
 
 				} catch (Exception e) {
@@ -135,10 +146,10 @@ public class Visual {
 		initialize();
 
 	}
-	public Visual() {
+	/*public Visual() {
 		initialize();
 
-	}
+	}*/
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -146,11 +157,11 @@ public class Visual {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(47, 79, 79));
-		frame.setBounds(100, 100, 1185, 611);
+		frame.setBounds(100, 100, 1321, 760);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 197, 877, 376);
+		scrollPane.setBounds(109, 197, 877, 435);
 		frame.getContentPane().add(scrollPane);
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -169,25 +180,19 @@ public class Visual {
 			}
 		});
 
-		btnEnterNextInstruction.setBounds(885, 531, 186, 42);
+		btnEnterNextInstruction.setBounds(1007, 581, 186, 42);
 		frame.getContentPane().add(btnEnterNextInstruction);
 
-		lblPageFaults = new JLabel("Page Faults:  0");
-		lblPageFaults.setForeground(new Color(255, 0, 0));
-		lblPageFaults.setBounds(807, 161, 129, 30);
-		frame.getContentPane().add(lblPageFaults);
-		lblPageFaults.setFont(new Font("Tahoma", Font.BOLD, 16));
-
-		JLabel lblNewJgoodiesTitle = new JLabel("VIRTUAL MEMORY CONCEPT (Visualization)");
+		JLabel lblNewJgoodiesTitle = new JLabel("Virtual Memory (Visualization)");
 		lblNewJgoodiesTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewJgoodiesTitle.setFont(new Font("Palatino Linotype", Font.BOLD, 18));
+		lblNewJgoodiesTitle.setFont(new Font("Palatino Linotype", Font.BOLD, 22));
 		lblNewJgoodiesTitle.setForeground(Color.WHITE);
 		lblNewJgoodiesTitle.setBounds(196, 11, 535, 38);
 		frame.getContentPane().add(lblNewJgoodiesTitle);
 		int s=(home.getRamSize()/home.getFrameSize());
 
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(897, 271, 108, 240);
+		scrollPane_2.setBounds(1007, 330, 108, 240);
 		frame.getContentPane().add(scrollPane_2);
 
 		physicalSpacePanel = new JPanel();
@@ -200,7 +205,7 @@ public class Visual {
 		physicalPanel.setLayout(new BoxLayout(physicalPanel, BoxLayout.Y_AXIS));
 
 		scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(1020, 271, 108, 240);
+		scrollPane_3.setBounds(1125, 330, 108, 240);
 		frame.getContentPane().add(scrollPane_3);
 
 		JPanel logicalSpacePanel = new JPanel();
@@ -220,50 +225,50 @@ public class Visual {
 		panel_6.setBackground(new Color(47, 79, 79));
 		FlowLayout flowLayout = (FlowLayout) panel_6.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_6.setBounds(73, 60, 405, 30);
+		panel_6.setBounds(101, 60, 499, 30);
 		frame.getContentPane().add(panel_6);
 
 		panel_3 = new JPanel();
 		panel_6.add(panel_3);
 		panel_3.setBackground(Color.GREEN);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 13));
 
 		lblNewLabel_1 = new JLabel("Empty Frame");
 		panel_6.add(lblNewLabel_1);
 		lblNewLabel_1.setForeground(new Color(240, 255, 255));
-		lblNewLabel_1.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+		lblNewLabel_1.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		panel_6.add(Box.createHorizontalStrut(20));
 
 		panel_4 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_4.getLayout();
-		flowLayout_1.setVgap(10);
+		flowLayout_1.setVgap(13);
 		flowLayout_1.setHgap(10);
 		panel_6.add(panel_4);
 		panel_4.setBackground(Color.RED);
 
 		JLabel lblNewLabel_2 = new JLabel("Occupied Frame");
 		panel_6.add(lblNewLabel_2);
-		lblNewLabel_2.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+		lblNewLabel_2.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		lblNewLabel_2.setForeground(new Color(240, 255, 255));
 		panel_6.add(Box.createHorizontalStrut(20));
 
 		panel_5 = new JPanel();
-		panel_5.setBackground(new Color(0, 250, 154));
+		panel_5.setBackground(Color.cyan);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_5.getLayout();
-		flowLayout_2.setVgap(10);
+		flowLayout_2.setVgap(13);
 		flowLayout_2.setHgap(10);
 		panel_6.add(panel_5);
 
 		JLabel lblNewLabel_3 = new JLabel("Demand Page");
 		panel_6.add(lblNewLabel_3);
 		lblNewLabel_3.setForeground(new Color(240, 255, 255));
-		lblNewLabel_3.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+		lblNewLabel_3.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 
 		panel_7 = new JPanel();
 		panel_7.setBorder(null);
 		panel_7.setBackground(new Color(47, 79, 79));
 		panel_7.setForeground(new Color(47, 79, 79));
-		panel_7.setBounds(73, 109, 405, 33);
+		panel_7.setBounds(101, 101, 556, 41);
 
 
 		frame.getContentPane().add(panel_7);
@@ -271,13 +276,13 @@ public class Visual {
 
 		JLabel lblNewLabel_4 = new JLabel("Total Number Of Frames :");
 		panel_7.add(lblNewLabel_4);
-		lblNewLabel_4.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+		lblNewLabel_4.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		lblNewLabel_4.setForeground(new Color(240, 255, 255));
 
 		label = new JLabel("0");
 		label.setText(Integer.toString(noOfFrames));
 		label.setForeground(Color.CYAN);
-		label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_7.add(label);
 		panel_7.add(Box.createHorizontalStrut(20));
 		//lblNewLabel_4.add(Box.createHorizontalStrut(60));
@@ -285,47 +290,48 @@ public class Visual {
 
 		lblNewLabel_6 = new JLabel("Total Number Of Pages :");
 		panel_7.add(lblNewLabel_6);
-		lblNewLabel_6.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+		lblNewLabel_6.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		lblNewLabel_6.setForeground(new Color(240, 255, 255));
 
 		JLabel lblTotalPages = new JLabel("");
 		panel_7.add(lblTotalPages);
 
 		lblTotalPages.setText(Integer.toString(noOfPages));
-		lblTotalPages.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblTotalPages.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTotalPages.setForeground(Color.CYAN);
 
 		JLabel lblReferencedPages = new JLabel("Referenced Pages");
-		lblReferencedPages.setForeground(new Color(135, 206, 250));
+		lblReferencedPages.setForeground(new Color(51, 255, 255));
 		lblReferencedPages.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblReferencedPages.setBounds(10, 165, 129, 21);
+		lblReferencedPages.setBounds(99, 153, 189, 33);
 		frame.getContentPane().add(lblReferencedPages);
 
 		lblNewLabel = new JLabel("<html>Physical<br>Address Space</html>");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(905, 237, 90, 30);
+		lblNewLabel.setBounds(1011, 289, 90, 30);
 		frame.getContentPane().add(lblNewLabel);
 
 		lblNewLabel_5 = new JLabel("<html>Logical<br>Address Space</html>");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_5.setForeground(Color.WHITE);
-		lblNewLabel_5.setBounds(1027, 237, 90, 30);
+		lblNewLabel_5.setBounds(1131, 289, 90, 30);
 		frame.getContentPane().add(lblNewLabel_5);
 
 		referenceStringParentPanel = new JPanel();
-		referenceStringParentPanel.setBounds(141, 148, 646, 50);
+		referenceStringParentPanel.setBounds(241, 148, 745, 50);
 		frame.getContentPane().add(referenceStringParentPanel);
 		referenceStringParentPanel.setLayout(new BoxLayout(referenceStringParentPanel, BoxLayout.X_AXIS));
 
 		scrollPane_1 = new JScrollPane();
 		referenceStringParentPanel.add(scrollPane_1);
 		referenceStringPanel = new JPanel();
+		referenceStringPanel.setBackground(new Color(240, 240, 240));
 		scrollPane_1.setViewportView(referenceStringPanel);
 		referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
 
 		algoSelectionPanel = new JPanel();
-		algoSelectionPanel.setBounds(589, 114, 400, 30);
+		algoSelectionPanel.setBounds(652, 112, 334, 30);
 		frame.getContentPane().add(algoSelectionPanel);
 		algoSelectionPanel.setLayout(new BoxLayout(algoSelectionPanel, BoxLayout.X_AXIS));
 
@@ -355,14 +361,17 @@ public class Visual {
 				isJumpInstruction=false;
 				referenceString.clear();
 				referenceStringPanel.removeAll();
+				referenceStringParentPanel.removeAll();
+				referenceStringList.clear();
 				pageSet.clear();
 				index.clear();
 				hashIndex.clear();
 				physicalFrames.clear();
 				physicalPanel.removeAll();
 				createPhysicalAddSpace();
-				lblPageFaults.setText("Page Faults:  0");
+				//lblPageFaults.setText("Page Faults:  0");
 				pageFaults=0;
+				noOfHits=0;
 				selectedAlgo=comboBoxAlgo.getSelectedItem().toString();
 				parentPanel.removeAll();
 				parentPanel.revalidate();
@@ -374,9 +383,9 @@ public class Visual {
 		algoSelectionPanel.add(btnRun);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(983, 33, 186, 80);
+		panel_1.setBounds(1004, 196, 229, 82);
 		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
 		panel_2 = new JPanel();
 		panel_1.add(panel_2);
@@ -386,18 +395,71 @@ public class Visual {
 		panel_2.add(lblNewLabel_10);
 		lblNewLabel_10.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		horizontalStrut_3 = Box.createHorizontalStrut(60);
+		horizontalStrut_3 = Box.createHorizontalStrut(30);
 		panel_2.add(horizontalStrut_3);
 		
-		lblNewLabel_11 = new JLabel("PageFaults");
+		lblNewLabel_11 = new JLabel("Page Hits");
 		panel_2.add(lblNewLabel_11);
-		lblNewLabel_11.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_11.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		horizontalStrut_4 = Box.createHorizontalStrut(20);
+		panel_2.add(horizontalStrut_4);
+		
+		lblNewLabel_12 = new JLabel("Page Faults");
+		panel_2.add(lblNewLabel_12);
+		lblNewLabel_12.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		panel_8 = new JPanel();
+		panel_1.add(panel_8);
+		panel_8.setLayout(new BoxLayout(panel_8, BoxLayout.X_AXIS));
+		
+		JLabel lblNewLabel_13 = new JLabel("FIFO               ");
+		panel_8.add(lblNewLabel_13);
+		//lblNewLabel_13.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		Component horizontalStrut_5 = Box.createHorizontalStrut(20);
+		panel_8.add(horizontalStrut_5);
+		
+		lblFIFOPageHits = new JLabel("");
+		lblFIFOPageHits.setText(Integer.toString(noOfHits));
+		panel_8.add(lblFIFOPageHits);
+		lblFIFOPageHits.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		Component horizontalStrut_6 = Box.createHorizontalStrut(30);
+		panel_8.add(horizontalStrut_6);
+		
+		lblFIFOPageFault = new JLabel("");
+		lblFIFOPageFault.setText(Integer.toString(pageFaults));
+		panel_8.add(lblFIFOPageFault);
+		lblFIFOPageFault.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		panel_9 = new JPanel();
+		panel_1.add(panel_9);
+		panel_9.setLayout(new BoxLayout(panel_9, BoxLayout.X_AXIS));
+		
+		lblNewLabel_15 = new JLabel("LRU               ");
+		panel_9.add(lblNewLabel_15);
+		
+		horizontalStrut_7 = Box.createHorizontalStrut(20);
+		panel_9.add(horizontalStrut_7);
+		
+		lblLRUPageHits = new JLabel("");
+		lblLRUPageHits.setText(Integer.toString(noOfHits));
+		panel_9.add(lblLRUPageHits);
+		
+		horizontalStrut_8 = Box.createHorizontalStrut(30);
+		panel_9.add(horizontalStrut_8);
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblLRUPageFault = new JLabel("");
+		lblLRUPageFault.setText(Integer.toString(pageFaults));
+		panel_9.add(lblLRUPageFault);
 		
 		
 		lblNewLabel_9 = new JLabel("Statistics");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_9.setForeground(Color.WHITE);
-		lblNewLabel_9.setBounds(1040, 15, 92, 17);
+		lblNewLabel_9.setBounds(1007, 155, 90, 30);
 		frame.getContentPane().add(lblNewLabel_9);
 		algoSelectionPanel.setVisible(false);
 		for(int i:referenceString){
@@ -449,9 +511,11 @@ public class Visual {
 			MyPanel  myPanel = home.instructions.get(pc);
 			int startPage = myPanel.getStartPage();
 			int destPage = myPanel.getDestinationPage();
+			
 			String type= (String)myPanel.comboBox.getSelectedItem();
 			// if two pages are referenced in a single instruction
 			if(startPage!=destPage){
+				
 				referenceString.add(startPage);
 				addPageInReferenceString(startPage);
 				referenceString.add(destPage);
@@ -465,6 +529,7 @@ public class Visual {
 				l.setOpaque(false);
 			referenceStringList.get(referenceStringList.size()-1).setOpaque(true);
 			referenceStringParentPanel.revalidate();
+			referenceStringPanel.revalidate();
 			createMap(Integer.toString(startPage),Integer.toString(destPage),type);
 			if(isJumpInstruction){
 				isJumpInstruction=false;
@@ -503,7 +568,7 @@ public class Visual {
 		page.setMinimumSize(new Dimension(30,30));
 		page.setPreferredSize(new Dimension(30,30));
 		page.setMaximumSize(new Dimension(30,30));
-		page.setBackground(Color.GREEN);
+		//page.setBackground(Color.GREEN);
 		page.setHorizontalAlignment(JLabel.CENTER);
 		referenceStringPanel.add(Box.createHorizontalStrut(20));
 		referenceStringPanel.add(page);
@@ -528,6 +593,8 @@ public class Visual {
 					pageSet.add(referenceString.get(referenceIndex));
 					index.add(referenceString.get(referenceIndex));
 					hashIndex.put(referenceString.get(referenceIndex), referenceIndex);
+					
+					
 				}
 			}
 
@@ -553,6 +620,10 @@ public class Visual {
 				//No room in frames but the referenced page already present in some frame
 				else{
 					hashIndex.put(referenceString.get(referenceIndex),referenceIndex);
+					
+					noOfHits++;
+					lblFIFOPageHits.setText(Integer.toString(pageFaults));
+					
 				}
 			}
 			referenceIndex++;
@@ -584,11 +655,16 @@ public class Visual {
 	void fifo(int i){	
 		int val = index.poll();
 		int ind=pageSet.indexOf(val);
+
+		noOfHits++;
+		lblFIFOPageHits.setText(Integer.toString(pageFaults));
 		pageSet.remove(ind);
 		pageSet.add(ind, referenceString.get(i));
 		index.add(referenceString.get(i));
+	
 		pageFaults++;
-		lblPageFaults.setText("Page Faults:  "+pageFaults);
+		lblFIFOPageFault.setText(Integer.toString(pageFaults));
+		//lblPageFaults.setText("Page Faults:  "+pageFaults);
 		physicalSpacePanel.revalidate();
 		parentPanel.revalidate();
 
@@ -604,13 +680,18 @@ public class Visual {
 				l=hashIndex.get(p);
 			}	
 		}
+		
+		noOfHits++;
+		lblLRUPageHits.setText(Integer.toString(pageFaults));
 		int pageIndex=pageSet.indexOf(page);
 		pageSet.remove(pageIndex);
 		hashIndex.remove(page);
 		pageSet.add(pageIndex,referenceString.get(i));
 		hashIndex.put(referenceString.get(i), i);
+		
 		pageFaults++;
-		lblPageFaults.setText("Page Faults:  "+pageFaults);
+		lblLRUPageFault.setText(Integer.toString(pageFaults));
+		//lblPageFaults.setText("Page Faults:  "+pageFaults);
 		((JLabel)physicalFrames.get(noOfFrames-1-pageIndex).getComponent(0)).setText("      Page  " + referenceString.get(i) +"     ");
 		physicalSpacePanel.revalidate();
 		parentPanel.revalidate();	
@@ -642,6 +723,7 @@ public class Visual {
 			FlowLayout flowLayout_1 = (FlowLayout) page.getLayout();
 			flowLayout_1.setVgap(20);
 			flowLayout_1.setHgap(10);
+			page.setBackground(Color.cyan);
 			page.setBorder(new LineBorder(new Color(0, 0, 0)));
 			pageNo = new JLabel(p);
 			pageNo.setMaximumSize(new Dimension(10, 20));
@@ -691,8 +773,8 @@ public class Visual {
 			instructionTypePanel = new JPanel();
 			instructionPanel.add(instructionTypePanel);
 
-			lblInstructionType = new JLabel("Instruction Type :");
-			lblInstructionType.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lblInstructionType = new JLabel("Instruction Type   :");
+			lblInstructionType.setFont(new Font("Tahoma", Font.BOLD, 14));
 			instructionTypePanel.add(lblInstructionType);
 
 			lblType = new JLabel("");
@@ -705,7 +787,7 @@ public class Visual {
 			instructionPanel.add(startPagePanel);
 
 			lblInstructionSourcePageNo = new JLabel("Source Page Number:         ");
-			lblInstructionSourcePageNo.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lblInstructionSourcePageNo.setFont(new Font("Tahoma", Font.BOLD, 14));
 			startPagePanel.add(lblInstructionSourcePageNo);
 
 			lblStartPage = new JLabel("");
@@ -718,7 +800,7 @@ public class Visual {
 
 
 			lblDestinationPageNo = new JLabel("Destination Page Number:");
-			lblDestinationPageNo.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lblDestinationPageNo.setFont(new Font("Tahoma", Font.BOLD, 14));
 			destinationPagePanel.add(lblDestinationPageNo);
 
 			lblDestPage = new JLabel("");
