@@ -1,5 +1,4 @@
 package UI;
-
 import java.awt.EventQueue;
 
 import javax.swing.Box;
@@ -186,7 +185,7 @@ public class Visual {
 		JLabel lblNewJgoodiesTitle = new JLabel("Virtual Memory (Visualization)");
 		lblNewJgoodiesTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewJgoodiesTitle.setFont(new Font("Palatino Linotype", Font.BOLD, 22));
-		lblNewJgoodiesTitle.setForeground(Color.WHITE);
+		lblNewJgoodiesTitle.setForeground(SystemColor.info);
 		lblNewJgoodiesTitle.setBounds(196, 11, 535, 38);
 		frame.getContentPane().add(lblNewJgoodiesTitle);
 		int s=(home.getRamSize()/home.getFrameSize());
@@ -253,7 +252,7 @@ public class Visual {
 		panel_6.add(Box.createHorizontalStrut(20));
 
 		panel_5 = new JPanel();
-		panel_5.setBackground(Color.cyan);
+		panel_5.setBackground(new Color(0, 250, 154));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_5.getLayout();
 		flowLayout_2.setVgap(13);
 		flowLayout_2.setHgap(10);
@@ -301,7 +300,7 @@ public class Visual {
 		lblTotalPages.setForeground(Color.CYAN);
 
 		JLabel lblReferencedPages = new JLabel("Referenced Pages");
-		lblReferencedPages.setForeground(new Color(51, 255, 255));
+		lblReferencedPages.setForeground(new Color(135, 206, 250));
 		lblReferencedPages.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblReferencedPages.setBounds(99, 153, 189, 33);
 		frame.getContentPane().add(lblReferencedPages);
@@ -326,7 +325,6 @@ public class Visual {
 		scrollPane_1 = new JScrollPane();
 		referenceStringParentPanel.add(scrollPane_1);
 		referenceStringPanel = new JPanel();
-		referenceStringPanel.setBackground(new Color(240, 240, 240));
 		scrollPane_1.setViewportView(referenceStringPanel);
 		referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
 
@@ -511,19 +509,28 @@ public class Visual {
 			MyPanel  myPanel = home.instructions.get(pc);
 			int startPage = myPanel.getStartPage();
 			int destPage = myPanel.getDestinationPage();
-			
 			String type= (String)myPanel.comboBox.getSelectedItem();
 			// if two pages are referenced in a single instruction
 			if(startPage!=destPage){
 				
 				referenceString.add(startPage);
 				addPageInReferenceString(startPage);
+				noOfHits++;
+				lblFIFOPageHits.setText(Integer.toString(noOfHits));
+			
 				referenceString.add(destPage);
 				addPageInReferenceString(destPage);
+				noOfHits++;
+				lblFIFOPageHits.setText(Integer.toString(noOfHits));
+				
 			}
 			else{
 				referenceString.add(startPage);
-				addPageInReferenceString(startPage);		
+				noOfHits++;
+				lblFIFOPageHits.setText(Integer.toString(noOfHits));
+				addPageInReferenceString(startPage);	
+				noOfHits++;
+				lblFIFOPageHits.setText(Integer.toString(noOfHits));
 			}
 			for(JLabel l:referenceStringList)
 				l.setOpaque(false);
@@ -537,9 +544,16 @@ public class Visual {
 
 			}
 			else if(type.equals("GoTo")){
+				int destAdd = myPanel.getDestinationAddress();
+				int startAdd=home.instructions.get(pc+1).getStartAddress();
+				
+				if(destAdd==startAdd){
+					pc++;
+				}
+				else{
 				// save address of next instruction to be executed
 				returnInstructionIndex=pc+1;
-				int destAdd = myPanel.getDestinationAddress();
+				
 				for(MyPanel p:home.instructions){
 					if(p.getStartAddress() == destAdd){
 						// load pc with the address of new instruction
@@ -549,7 +563,7 @@ public class Visual {
 					}
 				}
 			}
-
+			}
 			else{
 				pc++;
 			}
@@ -657,7 +671,7 @@ public class Visual {
 		int ind=pageSet.indexOf(val);
 
 		noOfHits++;
-		lblFIFOPageHits.setText(Integer.toString(pageFaults));
+		lblFIFOPageHits.setText(Integer.toString(noOfHits));
 		pageSet.remove(ind);
 		pageSet.add(ind, referenceString.get(i));
 		index.add(referenceString.get(i));
@@ -682,7 +696,7 @@ public class Visual {
 		}
 		
 		noOfHits++;
-		lblLRUPageHits.setText(Integer.toString(pageFaults));
+		lblLRUPageHits.setText(Integer.toString(noOfHits));
 		int pageIndex=pageSet.indexOf(page);
 		pageSet.remove(pageIndex);
 		hashIndex.remove(page);
@@ -723,7 +737,7 @@ public class Visual {
 			FlowLayout flowLayout_1 = (FlowLayout) page.getLayout();
 			flowLayout_1.setVgap(20);
 			flowLayout_1.setHgap(10);
-			page.setBackground(Color.cyan);
+			page.setBackground(Color.CYAN);
 			page.setBorder(new LineBorder(new Color(0, 0, 0)));
 			pageNo = new JLabel(p);
 			pageNo.setMaximumSize(new Dimension(10, 20));
@@ -823,3 +837,5 @@ public class Visual {
 
 	}
 }
+
+

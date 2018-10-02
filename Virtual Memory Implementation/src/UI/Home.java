@@ -43,9 +43,9 @@ public class Home {
 	Home window;
 	JFrame frame;
 	JPanel panel;
-	private JPanel panel_1;
+	JPanel panel_1;
 	public static ArrayList<JPanel> selectedRows;
-	public ArrayList<MyPanel> instructions;
+	public  ArrayList<MyPanel> instructions;
 	private int maxValue=0;
 	private JTextField textRam;
 	public static JTextField textFrame;
@@ -69,6 +69,7 @@ public class Home {
 	private JTextField textField_1;
 	//private JTextField textField_2;
 	private boolean LoadFile=false;
+	
 	
 	public int getRamSize(){
 		int  size = Integer.parseInt(textRam.getText());
@@ -120,13 +121,13 @@ public class Home {
 		addInstButton.setBackground(UIManager.getColor("Button.darkShadow"));
 		addInstButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MyPanel r = new MyPanel();
+				MyPanel r = new MyPanel(window);
 				panel_1.add(r);
 				if(instructions.size()!=0){
 
 					int s = instructions.get(instructions.size()-1).getStartAddress();
 
-					if(s != 0){
+					if(s >= 0){
 
 						int val = s;
 						val++;	
@@ -224,7 +225,7 @@ public class Home {
 				lblProgSize.setText(Integer.toString(maxValue));
 			}
 		});
-		btnAnalyse.setBounds(613, 62, 114, 28);
+		btnAnalyse.setBounds(661, 577, 114, 28);
 		frame.getContentPane().add(btnAnalyse);
 
 		lblProgramSize = new JLabel("Pragram Size (Bytes)");
@@ -357,7 +358,7 @@ public class Home {
 								textFrame.setText(words[1]);
 							}
 							else{
-								MyPanel myPanel = new MyPanel();
+								MyPanel myPanel = new MyPanel(window);
 								panel_1.add(myPanel);
 								myPanel.setStartAddress(words[0]);
 								if(words[1].equals("0"))
@@ -408,6 +409,8 @@ class MyPanel extends JPanel{
 	private JTextField textDPage;
 	//private JLabel lblDPage;
 	MyPanel panel;
+	Home home;
+	private boolean instructionExists=false;
 
 	public int getStartAddress(){
 		return  Integer.parseInt(textStart.getText().trim());
@@ -435,9 +438,10 @@ class MyPanel extends JPanel{
 	public void setDestinationPage(String sp){
 		textDPage.setText(sp);
 	}
-
-	MyPanel(){
+	
+	MyPanel(Home h){
 		super();
+		home=h;
 		panel=this;
 		checkBox = new JCheckBox();
 		checkBox.addItemListener(new ItemListener(){
@@ -521,11 +525,27 @@ class MyPanel extends JPanel{
 					int result=start/page;
 					textDPage.setText(Integer.toString(result));
 				}
+				for(MyPanel p:home.instructions){
+					if(p.getStartAddress()==Integer.parseInt(r))
+					{
+						instructionExists=true;
+						break;
+					}
+				}
+				if(!instructionExists){
+					MyPanel p = new MyPanel(home);
+					p.setStartAddress(r);
+					home.panel_1.add(p);
+					//p.setStartAddress(r);
+					home.instructions.add(p);
+					home.panel_1.revalidate();
+				}
 			}
 
-
+          
 
 		});
+		
 
 		panel.add(textDest);
 		textDest.setColumns(10);
