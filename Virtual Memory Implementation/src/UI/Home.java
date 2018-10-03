@@ -500,7 +500,7 @@ class MyPanel extends JPanel{
 						int s1 = Integer.parseInt(textDest.getText().trim());
 						if(s1 != 0){
 							int val = s1;
-							val++;	
+							//val++;	
 							p.setStartAddress(Integer.toString(val));
 						}
 						home.instructions.add(p);
@@ -539,26 +539,6 @@ class MyPanel extends JPanel{
 					int start= Integer.parseInt(r);
 					int result=start/page;
 					textDPage.setText(Integer.toString(result));
-					if(panel.comboBox.getSelectedItem().equals("GoTo")){
-						for(MyPanel p:home.instructions){
-							if(p.getStartAddress()==Integer.parseInt(r)){
-								instructionExists=true;
-								break;
-							}
-						}
-						if(!instructionExists){
-							MyPanel p = new MyPanel(home);
-							home.panel_1.add(p);
-							int s1 = Integer.parseInt(r);
-							if(s1 != 0){
-								int val = s1;
-								val++;	
-								p.setStartAddress(Integer.toString(val));
-							}
-							home.instructions.add(p);
-							home.panel_1.revalidate();
-						}	
-					}
 				}
 
 			}
@@ -580,6 +560,37 @@ class MyPanel extends JPanel{
 
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
+
+				int  s=Integer.parseInt(Home.textFrame.getText().trim());
+				String r = textDest.getText().trim(); 
+				if(s !=0 && r.compareTo("")!=0){
+					int page = s ;
+					int start= Integer.parseInt(r);
+					//int result=start/page;
+				//	textDPage.setText(Integer.toString(result));
+					if(panel.comboBox.getSelectedItem().equals("GoTo")){
+						for(MyPanel p:home.instructions){
+							if(p.getStartAddress()==Integer.parseInt(r)){
+								instructionExists=true;
+								break;
+							}
+						}
+						if(!instructionExists){
+							MyPanel p = new MyPanel(home);
+							home.panel_1.add(p);
+							int s1 = Integer.parseInt(r);
+							if(s1 != 0){
+								int val = s1;
+								//val++;	
+								p.setStartAddress(Integer.toString(val));
+							}
+							home.instructions.add(p);
+							home.panel_1.revalidate();
+						}	
+					}
+				}
+
+			
 			}
 		});
 

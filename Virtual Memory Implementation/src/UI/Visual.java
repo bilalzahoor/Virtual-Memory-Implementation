@@ -515,22 +515,13 @@ public class Visual {
 				
 				referenceString.add(startPage);
 				addPageInReferenceString(startPage);
-				noOfHits++;
-				lblFIFOPageHits.setText(Integer.toString(noOfHits));
-			
 				referenceString.add(destPage);
 				addPageInReferenceString(destPage);
-				noOfHits++;
-				lblFIFOPageHits.setText(Integer.toString(noOfHits));
 				
 			}
 			else{
 				referenceString.add(startPage);
-				noOfHits++;
-				lblFIFOPageHits.setText(Integer.toString(noOfHits));
 				addPageInReferenceString(startPage);	
-				noOfHits++;
-				lblFIFOPageHits.setText(Integer.toString(noOfHits));
 			}
 			for(JLabel l:referenceStringList)
 				l.setOpaque(false);
@@ -607,8 +598,8 @@ public class Visual {
 					pageSet.add(referenceString.get(referenceIndex));
 					index.add(referenceString.get(referenceIndex));
 					hashIndex.put(referenceString.get(referenceIndex), referenceIndex);
-					
-					
+					pageFaults++;
+					lblFIFOPageFault.setText(Integer.toString(pageFaults));
 				}
 			}
 
@@ -636,7 +627,7 @@ public class Visual {
 					hashIndex.put(referenceString.get(referenceIndex),referenceIndex);
 					
 					noOfHits++;
-					lblFIFOPageHits.setText(Integer.toString(pageFaults));
+					lblFIFOPageHits.setText(Integer.toString(noOfHits));
 					
 				}
 			}
@@ -669,9 +660,6 @@ public class Visual {
 	void fifo(int i){	
 		int val = index.poll();
 		int ind=pageSet.indexOf(val);
-
-		noOfHits++;
-		lblFIFOPageHits.setText(Integer.toString(noOfHits));
 		pageSet.remove(ind);
 		pageSet.add(ind, referenceString.get(i));
 		index.add(referenceString.get(i));
@@ -695,8 +683,6 @@ public class Visual {
 			}	
 		}
 		
-		noOfHits++;
-		lblLRUPageHits.setText(Integer.toString(noOfHits));
 		int pageIndex=pageSet.indexOf(page);
 		pageSet.remove(pageIndex);
 		hashIndex.remove(page);
