@@ -1,54 +1,30 @@
 package UI;
 import java.awt.EventQueue;
-
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.border.LineBorder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import javax.swing.JComboBox;
-
 import java.awt.Font;
-
 import javax.swing.SwingConstants;
-
 import java.awt.Component;
 import java.awt.SystemColor;
-
 import javax.swing.DefaultComboBoxModel;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel; 
-import org.jfree.chart.JFreeChart; 
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset; 
-import org.jfree.data.category.DefaultCategoryDataset; 
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame; 
-import org.jfree.ui.RefineryUtilities; 
-
 public class Visual {
 	public JFrame frame;
 	private ArrayList<Integer> referenceString;
@@ -106,8 +82,6 @@ public class Visual {
 	private JLabel lblLRUPageFault;
 	private JLabel lblFIFOPageHits;
 	private JLabel lblLRUPageHits;
-	private JPanel panel_10;
-	
 	/**
 	 * Launch the application.
 	 */
@@ -196,7 +170,7 @@ public class Visual {
 		physicalSpacePanel.add(physicalPanel);
 		physicalPanel.setLayout(new BoxLayout(physicalPanel, BoxLayout.Y_AXIS));
 		scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(1125, 330, 112, 240);
+		scrollPane_3.setBounds(1125, 330, 108, 240);
 		frame.getContentPane().add(scrollPane_3);
 		JPanel logicalSpacePanel = new JPanel();
 		logicalSpacePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -430,10 +404,6 @@ public class Visual {
 		lblNewLabel_9.setForeground(Color.WHITE);
 		lblNewLabel_9.setBounds(1007, 155, 90, 30);
 		frame.getContentPane().add(lblNewLabel_9);
-		
-		panel_10 = new JPanel();
-		panel_10.setBounds(1105, 60, 177, 97);
-		frame.getContentPane().add(panel_10);
 		algoSelectionPanel.setVisible(false);
 		for(int i:referenceString){
 			JLabel page = new JLabel(Integer.toString(i));
@@ -460,32 +430,7 @@ public class Visual {
 			lbl1.setHorizontalAlignment(JLabel.CENTER);
 			pan1.add(lbl1);
 		}
-		XYSeries series = new XYSeries("XYGraph");
-		   series.add(1, 1);
-		   series.add(1, 2);
-		   series.add(2, 1);
-		   series.add(3, 9);
-		   series.add(4, 10);
 
-		// Add the series to your data set
-		   XYSeriesCollection dataset = new XYSeriesCollection();
-		   dataset.addSeries(series);
-
-		// Generate the graph
-		   JFreeChart chart = ChartFactory.createXYLineChart(
-		   "Page Faults", // Title
-		   null, // x-axis Label
-		   "Page Faults", // y-axis Label
-		   dataset, // Dataset
-		   PlotOrientation.VERTICAL, // Plot Orientation
-		   true, // Show Legend
-		   true, // Use tooltips
-		   false // Configure chart to generate URLs?
-		);
-		  panel_10.setLayout(new java.awt.BorderLayout());
-		  ChartPanel CP = new ChartPanel(chart);
-		  panel_10.add(CP,BorderLayout.CENTER);
-		  panel_10.validate();
 	}
 	void createPhysicalAddSpace(){
 		for(int i=0;i<noOfFrames;i++){
@@ -831,7 +776,6 @@ public class Visual {
 		}
 
 	}
-	
 }
 
 

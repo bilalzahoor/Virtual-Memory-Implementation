@@ -26,6 +26,19 @@
     "javaRuntime": true
   },
   {
+    "symbolicName": "org.jfree.jfreechart",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 19,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "ba9ee7dbb2e4c57a6901c79f614ed2dea9cc0e20",
+    "jarFileModificationDate": "2018-10-01T08:59:06+05:30",
+    "location": "C:\\Users\\Ibn Zahoor\\Downloads\\jfreechart-1.0.19.jar",
+    "javaRuntime": false
+  },
+  {
     "symbolicName": "jre",
     "version": {
       "major": 1,
@@ -169,6 +182,19 @@
     "javaRuntime": true
   },
   {
+    "symbolicName": "jar_files",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "1d51e9afd5a4c76db9c14fc1ddae9b48fd2da4bb",
+    "jarFileModificationDate": "2018-10-02T21:38:50.838+05:30",
+    "location": "C:\\Users\\Ibn Zahoor\\Downloads\\jar_files.zip",
+    "javaRuntime": false
+  },
+  {
     "symbolicName": "jre",
     "version": {
       "major": 1,
@@ -219,6 +245,19 @@
     "jarFileModificationDate": "2016-07-19T14:36:44.804+05:30",
     "location": "C:\\Program Files\\Java\\jdk1.8.0_92\\jre\\lib\\jsse.jar",
     "javaRuntime": true
+  },
+  {
+    "symbolicName": "org.jfree.jcommon",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 23,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "a316f336ca996e0c6bec4e4fbd49be8f5e1c3968",
+    "jarFileModificationDate": "2018-10-01T08:59:08+05:30",
+    "location": "C:\\Users\\Ibn Zahoor\\Downloads\\jcommon-1.0.23.jar",
+    "javaRuntime": false
   },
   {
     "symbolicName": "jre",

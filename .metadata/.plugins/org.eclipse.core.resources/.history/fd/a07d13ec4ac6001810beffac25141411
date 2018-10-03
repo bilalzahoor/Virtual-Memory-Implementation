@@ -33,12 +33,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 
 import javax.swing.UIManager;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 public class Home {
 	Home window;
@@ -66,9 +65,12 @@ public class Home {
 	JButton addInstButton;
 	JLabel lblRam;
 	JLabel lblProgSize;
-
-
-
+	private JTextField textField;
+	private JTextField textField_1;
+	//private JTextField textField_2;
+	private boolean LoadFile=false;
+	
+	
 	public int getRamSize(){
 		int  size = Integer.parseInt(textRam.getText());
 		return size;
@@ -434,7 +436,7 @@ class MyPanel extends JPanel{
 	public void setDestinationPage(String sp){
 		textDPage.setText(sp);
 	}
-
+	
 	MyPanel(Home h){
 		super();
 		home=h;
@@ -469,7 +471,7 @@ class MyPanel extends JPanel{
 
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-
+				
 
 
 			}
@@ -479,6 +481,7 @@ class MyPanel extends JPanel{
 		panel.add(textStart);
 		textStart.setColumns(10);
 		panel.add(Box.createHorizontalStrut(10));
+
 		comboBox = new JComboBox<String>();
 		comboBox.addItem("Read/Write");
 		comboBox.addItem("GoTo");
@@ -486,10 +489,9 @@ class MyPanel extends JPanel{
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String s =textDest.getText().trim();
-				if(panel.comboBox.getSelectedItem().equals("GoTo") && s.compareTo("")!=0){
+				if(panel.comboBox.getSelectedItem().equals("GoTo")){
 					for(MyPanel p:home.instructions){
-						if(p.getStartAddress()==Integer.parseInt(s)){
+						if(p.getStartAddress()==Integer.parseInt(textDest.getText().trim())){
 							instructionExists=true;
 							break;
 						}
@@ -497,72 +499,24 @@ class MyPanel extends JPanel{
 					if(!instructionExists){
 						MyPanel p = new MyPanel(home);
 						home.panel_1.add(p);
-						int s1 = Integer.parseInt(textDest.getText().trim());
-						if(s1 != 0){
-							int val = s1;
-							val++;	
-							p.setStartAddress(Integer.toString(val));
-						}
+							int s1 = Integer.parseInt(textDest.getText().trim());
+							if(s1 != 0){
+								int val = s1;
+								val++;	
+								p.setStartAddress(Integer.toString(val));
+							}
 						home.instructions.add(p);
 						home.panel_1.revalidate();
 					}	
 				}
 			}
-
+			
 		});
 		panel.add(comboBox);
 		panel.add(Box.createHorizontalStrut(10));
 
 
 		textDest = new JTextField();
-		textDest.getDocument().addDocumentListener(new DocumentListener(){
-
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				onChange();
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				onChange();
-			}
-
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				onChange();
-			}
-			public void onChange(){
-				int  s=Integer.parseInt(Home.textFrame.getText().trim());
-				String r = textDest.getText().trim(); 
-				if(s !=0 && r.compareTo("")!=0){
-					int page = s ;
-					int start= Integer.parseInt(r);
-					int result=start/page;
-					textDPage.setText(Integer.toString(result));
-					if(panel.comboBox.getSelectedItem().equals("GoTo")){
-						for(MyPanel p:home.instructions){
-							if(p.getStartAddress()==Integer.parseInt(r)){
-								instructionExists=true;
-								break;
-							}
-						}
-						if(!instructionExists){
-							MyPanel p = new MyPanel(home);
-							home.panel_1.add(p);
-							int s1 = Integer.parseInt(r);
-							if(s1 != 0){
-								int val = s1;
-								val++;	
-								p.setStartAddress(Integer.toString(val));
-							}
-							home.instructions.add(p);
-							home.panel_1.revalidate();
-						}	
-					}
-				}
-
-			}
-		});
 		textDest.addFocusListener(new FocusListener(){
 
 
@@ -580,27 +534,64 @@ class MyPanel extends JPanel{
 
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
+				int  s=Integer.parseInt(Home.textFrame.getText().trim());
+				String r = textDest.getText().trim(); 
+				if(s !=0 && r.compareTo("")!=0){
+					int page = s ;
+					int start= Integer.parseInt(r);
+					int result=start/page;
+					textDPage.setText(Integer.toString(result));
+					if(panel.comboBox.getSelectedItem().equals("GoTo")){
+					for(MyPanel p:home.instructions){
+						if(p.getStartAddress()==Integer.parseInt(r)){
+							instructionExists=true;
+							break;
+						}
+					}
+					if(!instructionExists){
+						MyPanel p = new MyPanel(home);
+						home.panel_1.add(p);
+							int s1 = Integer.parseInt(r);
+							if(s1 != 0){
+								int val = s1;
+								val++;	
+								p.setStartAddress(Integer.toString(val));
+							}
+						home.instructions.add(p);
+						home.panel_1.revalidate();
+					}	
+				}
+				}
 			}
 		});
-
+		
 
 		panel.add(textDest);
 		textDest.setColumns(10);
 		panel.add(Box.createHorizontalStrut(10));
+
+
 		textSPage= new JTextField();
 		textSPage.setColumns(10);
 		panel.add(textSPage);
 		textSPage.setEditable(false);
 		textSPage.setHorizontalAlignment(JTextField.CENTER);
 		panel.add(Box.createHorizontalStrut(10));
+
+		
 		textSPage.addFocusListener(new FocusListener(){
+
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
+
 			}
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
+
 			}
+
 		});
+
 		textDPage = new JTextField();
 		textDPage.setEditable(false);
 		textDPage.setHorizontalAlignment(JTextField.CENTER);
@@ -609,12 +600,19 @@ class MyPanel extends JPanel{
 		textDPage.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
+				
 			}
+
+
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
+
 			}
 
 		});
+
 	}
+
+
 }
 
