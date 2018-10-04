@@ -1,7 +1,5 @@
 package UI;
 import java.awt.EventQueue;
-
-import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -11,7 +9,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.BoxLayout;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -20,14 +17,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
-
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.SwingConstants;
-
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;

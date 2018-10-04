@@ -5,4 +5,5 @@
 <fullyQualifiedTypeName name="org.jfree.data.xy.XYSeries"/>
 <fullyQualifiedTypeName name="org.jfree.data.xy.XYSeriesCollection"/>
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+<fullyQualifiedTypeName name="org.jfree.data.category.DefaultCategoryDataset"/>
 </qualifiedTypeNameHistroy>
