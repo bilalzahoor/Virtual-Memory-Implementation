@@ -11,6 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Document;
@@ -85,8 +88,7 @@ public class Visual {
 	DefaultCategoryDataset dataset;
 	private JPanel panel_10;
 	private JButton  buttonNextInst;
-	private JScrollPane scrollPane_4;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -132,11 +134,16 @@ public class Visual {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(47, 79, 79));
-		frame.setBounds(100, 100, 1321, 760);
+		frame.setBounds(100, 100, 1382, 762);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(109, 197, 877, 435);
+		scrollPane.setBounds(109, 153, 877, 479);
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+			public void adjustmentValueChanged(AdjustmentEvent e) {  
+				e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+			}
+		});
 		frame.getContentPane().add(scrollPane);
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -144,9 +151,9 @@ public class Visual {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		parentPanel = new JPanel();
 		panel.add(parentPanel);
-	
+
 		parentPanel.setLayout(new BoxLayout(parentPanel, BoxLayout.Y_AXIS));
-		buttonNextInst = new JButton("Next Instruction");
+		buttonNextInst = new JButton("Execute Next Instruction");
 		buttonNextInst.setForeground(Color.WHITE);
 		buttonNextInst.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonNextInst.setBackground(SystemColor.textHighlight);
@@ -156,22 +163,15 @@ public class Visual {
 					executeInstruction();
 				}
 				else{
-			        final java.awt.Image image = getImageFromPanel(parentPanel);
+					final java.awt.Image image = getImageFromPanel(parentPanel);
 					String fileName =selectedAlgo +  "_test.pdf";
-			        printToPDF(image, fileName);
+					printToPDF(image, fileName);
 				}
 			}
 		});
 
-		buttonNextInst.setBounds(1007, 581, 186, 42);
+		buttonNextInst.setBounds(1007, 581, 230, 42);
 		frame.getContentPane().add(buttonNextInst);
-
-		JLabel lblNewJgoodiesTitle = new JLabel("Virtual Memory (Visualization)");
-		lblNewJgoodiesTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewJgoodiesTitle.setFont(new Font("Palatino Linotype", Font.BOLD, 22));
-		lblNewJgoodiesTitle.setForeground(SystemColor.info);
-		lblNewJgoodiesTitle.setBounds(196, 11, 535, 38);
-		frame.getContentPane().add(lblNewJgoodiesTitle);
 		scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(1007, 330, 108, 240);
 		frame.getContentPane().add(scrollPane_2);
@@ -199,7 +199,7 @@ public class Visual {
 		panel_6.setBackground(new Color(47, 79, 79));
 		FlowLayout flowLayout = (FlowLayout) panel_6.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_6.setBounds(101, 60, 499, 30);
+		panel_6.setBounds(110, 60, 499, 30);
 		frame.getContentPane().add(panel_6);
 		panel_3 = new JPanel();
 		panel_6.add(panel_3);
@@ -222,7 +222,7 @@ public class Visual {
 		lblNewLabel_2.setForeground(new Color(240, 255, 255));
 		panel_6.add(Box.createHorizontalStrut(20));
 		panel_5 = new JPanel();
-		panel_5.setBackground(new Color(0, 250, 154));
+		panel_5.setBackground(Color.CYAN);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_5.getLayout();
 		flowLayout_2.setVgap(13);
 		flowLayout_2.setHgap(10);
@@ -235,7 +235,7 @@ public class Visual {
 		panel_7.setBorder(null);
 		panel_7.setBackground(new Color(47, 79, 79));
 		panel_7.setForeground(new Color(47, 79, 79));
-		panel_7.setBounds(101, 101, 556, 41);
+		panel_7.setBounds(111, 101, 556, 41);
 		frame.getContentPane().add(panel_7);
 		panel_7.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		JLabel lblNewLabel_4 = new JLabel("Total Number Of Frames :");
@@ -260,7 +260,7 @@ public class Visual {
 		JLabel lblReferencedPages = new JLabel("Referenced Pages");
 		lblReferencedPages.setForeground(new Color(135, 206, 250));
 		lblReferencedPages.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblReferencedPages.setBounds(99, 153, 189, 33);
+		lblReferencedPages.setBounds(109, 643, 154, 33);
 		frame.getContentPane().add(lblReferencedPages);
 
 		lblNewLabel = new JLabel("<html>Physical<br>Address Space</html>");
@@ -275,24 +275,66 @@ public class Visual {
 		lblNewLabel_5.setBounds(1131, 289, 90, 30);
 		frame.getContentPane().add(lblNewLabel_5);
 		
-		scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(241, 148, 745, 50);
-		frame.getContentPane().add(scrollPane_4);
+				referenceStringParentPanel = new JPanel();
+				referenceStringParentPanel.setBounds(239, 628, 743, 48);
+				frame.getContentPane().add(referenceStringParentPanel);
+				referenceStringParentPanel.setLayout(new BoxLayout(referenceStringParentPanel, BoxLayout.X_AXIS));
+				
+						referenceStringPanel = new JPanel();
+						referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
+						referenceStringParentPanel.add(referenceStringPanel);
 
-		referenceStringParentPanel = new JPanel();
-		scrollPane_4.setViewportView(referenceStringParentPanel);
-		referenceStringParentPanel.setLayout(new BoxLayout(referenceStringParentPanel, BoxLayout.X_AXIS));
+		panel_10 = new JPanel();
+		panel_10.setBounds(1007, 141, 258, 147);
+		frame.getContentPane().add(panel_10);
+		for(int i:referenceString){
+			JLabel page = new JLabel(Integer.toString(i));
+			page.setMinimumSize(new Dimension(30,30));
+			page.setPreferredSize(new Dimension(30,30));
+			page.setMaximumSize(new Dimension(30,30));
+			page.setOpaque(true);
+			page.setHorizontalAlignment(JLabel.CENTER);
+			referenceStringPanel.add(Box.createHorizontalStrut(20));
+			referenceStringPanel.add(page);	
+		}
 
-		referenceStringPanel = new JPanel();
-		referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
-		referenceStringParentPanel.add(referenceStringPanel);
+		createPhysicalAddSpace();
+		for(int i=noOfPages-1;i>=0;i--){
+			JPanel pan1 = new JPanel();
+			pan1.setBackground(Color.CYAN);
+			pan1.setBorder(new LineBorder(new Color(0, 0, 0)));
+			logicalPanel.add(pan1);
+			pan1.setLayout(new BoxLayout(pan1, BoxLayout.X_AXIS));
+			JLabel lbl1 = new JLabel("Page  " + i);
+			lbl1.setMinimumSize(new Dimension(100,20));
+			lbl1.setMaximumSize(new Dimension(100,20));
+			lbl1.setPreferredSize(new Dimension(100,2));
+			lbl1.setHorizontalAlignment(JLabel.CENTER);
+			pan1.add(lbl1);
+		}
+		dataset =  new DefaultCategoryDataset( );  		        
+
+		// Generate the graph
+		JFreeChart chart = ChartFactory.createBarChart(
+				"Statistics", 				// Title
+				"Page Replacement Algorithm",            
+				"Page Faults",
+				dataset, 					// Dataset
+				PlotOrientation.VERTICAL, // Plot Orientation
+				true, 						// Show Legend
+				true, 				// Use tooltips
+				false 					// Configure chart to generate URLs?
+				);
+		panel_10.setLayout(new java.awt.BorderLayout());
+		ChartPanel CP = new ChartPanel(chart);
+		panel_10.add(CP,BorderLayout.CENTER);
 
 		algoSelectionPanel = new JPanel();
-		algoSelectionPanel.setBounds(652, 112, 334, 30);
+		algoSelectionPanel.setBounds(1007, 634, 311, 23);
 		frame.getContentPane().add(algoSelectionPanel);
 		algoSelectionPanel.setLayout(new BoxLayout(algoSelectionPanel, BoxLayout.X_AXIS));
 
-		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		Component horizontalStrut_2 = Box.createHorizontalStrut(10);
 		algoSelectionPanel.add(horizontalStrut_2);
 
 		JLabel lblNewLabel_8 = new JLabel("Page Replacement Algorithm");
@@ -327,12 +369,13 @@ public class Visual {
 				physicalFrames.clear();
 				physicalPanel.removeAll();
 				createPhysicalAddSpace();
-				//lblPageFaults.setText("Page Faults:  0");
 				pageFaults=0;
 				noOfHits=0;
 				selectedAlgo=comboBoxAlgo.getSelectedItem().toString();
 				buttonNextInst.setText("Next Instruction");
 				parentPanel.removeAll();
+				referenceStringPanel.revalidate();
+				referenceStringParentPanel.revalidate();
 				parentPanel.revalidate();
 				btnRun.setEnabled(false);
 			}
@@ -340,78 +383,33 @@ public class Visual {
 		btnRun.setForeground(Color.WHITE);
 		btnRun.setBackground(SystemColor.textHighlight);
 		algoSelectionPanel.add(btnRun);
-		
-		panel_10 = new JPanel();
-		panel_10.setBounds(1007, 141, 258, 147);
-		frame.getContentPane().add(panel_10);
 		algoSelectionPanel.setVisible(false);
-		for(int i:referenceString){
-			JLabel page = new JLabel(Integer.toString(i));
-			page.setMinimumSize(new Dimension(30,30));
-			page.setPreferredSize(new Dimension(30,30));
-			page.setMaximumSize(new Dimension(30,30));
-			page.setOpaque(true);
-			page.setHorizontalAlignment(JLabel.CENTER);
-			referenceStringPanel.add(Box.createHorizontalStrut(20));
-			referenceStringPanel.add(page);	
-		}
-		
-		createPhysicalAddSpace();
-		for(int i=noOfPages-1;i>=0;i--){
-			JPanel pan1 = new JPanel();
-			pan1.setBackground(Color.CYAN);
-			pan1.setBorder(new LineBorder(new Color(0, 0, 0)));
-			logicalPanel.add(pan1);
-			pan1.setLayout(new BoxLayout(pan1, BoxLayout.X_AXIS));
-			JLabel lbl1 = new JLabel("Page  " + i);
-			lbl1.setMinimumSize(new Dimension(100,20));
-			lbl1.setMaximumSize(new Dimension(100,20));
-			lbl1.setPreferredSize(new Dimension(100,2));
-			lbl1.setHorizontalAlignment(JLabel.CENTER);
-			pan1.add(lbl1);
-		}
-		    dataset =  new DefaultCategoryDataset( );  		        
-
-		// Generate the graph
-		   JFreeChart chart = ChartFactory.createBarChart(
-		   "Statistics", 				// Title
-		   "Page Replacement Algorithm",            
-	         "Page Faults",
-		   dataset, 					// Dataset
-		   PlotOrientation.VERTICAL, // Plot Orientation
-		   true, 						// Show Legend
-		   true, 				// Use tooltips
-		   false 					// Configure chart to generate URLs?
-		   );
-		  panel_10.setLayout(new java.awt.BorderLayout());
-		  ChartPanel CP = new ChartPanel(chart);
-		  panel_10.add(CP,BorderLayout.CENTER);
-		  CategoryPlot categoryPlot = chart.getCategoryPlot();
-		  BarRenderer br = (BarRenderer) categoryPlot.getRenderer();
-		  br.setMaximumBarWidth(.05); // set maximum width to 5% of chart
-		  panel_10.validate();
+		CategoryPlot categoryPlot = chart.getCategoryPlot();
+		BarRenderer br = (BarRenderer) categoryPlot.getRenderer();
+		br.setMaxBarWidth(.05); // set maximum width to 5% of chart
+		panel_10.validate();
 	}
 	public java.awt.Image getImageFromPanel(Component component) {
 
-        BufferedImage image = new BufferedImage(component.getWidth(),component.getHeight(), BufferedImage.TYPE_INT_RGB);
-        component.paint(image.getGraphics());
-        return image;
-    }
+		BufferedImage image = new BufferedImage(component.getWidth(),component.getHeight(), BufferedImage.TYPE_INT_RGB);
+		component.paint(image.getGraphics());
+		return image;
+	}
 	public void printToPDF(java.awt.Image awtImage, String fileName) {
-        try {
-            Document d = new Document();
-            PdfWriter writer = PdfWriter.getInstance(d, new FileOutputStream(fileName));
-            d.open();
-            Image iTextImage = Image.getInstance(writer, awtImage, 1);
-            iTextImage.setAbsolutePosition(30, 30);
-            iTextImage.scalePercent(60);
-            d.add(iTextImage);
-            d.close();
+		try {
+			Document d = new Document();
+			PdfWriter writer = PdfWriter.getInstance(d, new FileOutputStream(fileName));
+			d.open();
+			Image iTextImage = Image.getInstance(writer, awtImage, 1);
+			iTextImage.setAbsolutePosition(30, 30);
+			iTextImage.scalePercent(50);
+			d.add(iTextImage);
+			d.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }   
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}   
+	}
 	void createPhysicalAddSpace(){
 		for(int i=0;i<noOfFrames;i++){
 
@@ -437,12 +435,12 @@ public class Visual {
 			String type= (String)myPanel.comboBox.getSelectedItem();
 			// if two pages are referenced in a single instruction
 			if(startPage!=destPage){
-				
+
 				referenceString.add(startPage);
 				addPageInReferenceString(startPage);
 				referenceString.add(destPage);
 				addPageInReferenceString(destPage);
-				
+
 			}
 			else{
 				referenceString.add(startPage);
@@ -461,25 +459,25 @@ public class Visual {
 			else if(type.equals("GoTo")){
 				int destAdd = myPanel.getDestinationAddress();
 				if(pc+1  < home.instructions.size()){
-				int startAdd=home.instructions.get(pc+1).getStartAddress();
-				
-				if(destAdd==startAdd){
-					pc++;
-				}
-				}
+					int startAdd=home.instructions.get(pc+1).getStartAddress();
+
+					if(destAdd==startAdd){
+						pc++;
+					}
 				else{
-				// save address of next instruction to be executed
-				returnInstructionIndex=pc+1;
-				
-				for(MyPanel p:home.instructions){
-					if(p.getStartAddress() == destAdd){
-						// load pc with the address of new instruction
-						pc = home.instructions.indexOf(p);
-						isJumpInstruction =true;
-						break;
+					// save address of next instruction to be executed
+					returnInstructionIndex=pc+1;
+
+					for(MyPanel p:home.instructions){
+						if(p.getStartAddress() == destAdd){
+							// load pc with the address of new instruction
+							pc = home.instructions.indexOf(p);
+							isJumpInstruction =true;
+							break;
+						}
 					}
 				}
-			}
+				}
 			}
 			else{
 				pc++;
@@ -493,7 +491,11 @@ public class Visual {
 			((JButton)algoSelectionPanel.getComponent(5)).setEnabled(true);
 			buttonNextInst.setText("Save As PDF");
 			dataset.addValue(pageFaults, selectedAlgo, "");
-
+			JLabel displayMsg=new JLabel("Executed All Instructions");
+			displayMsg.setFont(new Font("Tahoma", Font.BOLD, 18));
+			displayMsg.setForeground(Color.RED);
+			parentPanel.add(displayMsg);
+		
 		}
 
 	}
@@ -554,7 +556,7 @@ public class Visual {
 				else{
 					hashIndex.put(referenceString.get(referenceIndex),referenceIndex);				
 					noOfHits++;
-					
+
 				}
 			}
 			referenceIndex++;
@@ -570,7 +572,7 @@ public class Visual {
 				Page p = new Page(pageSet.get(pageNo).toString());
 				f.add(p);
 				f.frame.setBackground(Color.RED);
-				physicalFrames.get(noOfFrames-1-i).setBackground(Color.CYAN);
+				physicalFrames.get(noOfFrames-1-i).setBackground(Color.RED);
 				((JLabel)physicalFrames.get(noOfFrames-1-i).getComponent(0)).setText("      Page  " + pageSet.get(pageNo).toString() +"     ");
 				tempDesc = tempDesc +" Page No. " + (pageSet.get(pageNo).toString()) + " mappped to Frame No." + i+"<br>";
 				pageNo++;
@@ -579,17 +581,17 @@ public class Visual {
 			frames.add(f);	
 		}
 		tempDesc = tempDesc + "</html>";
-
 		instPanel.description.setText(tempDesc);
-		parentPanel.revalidate();	
+		parentPanel.revalidate();
 	}
+
 	void fifo(int i){	
 		int val = index.poll();
 		int ind=pageSet.indexOf(val);
 		pageSet.remove(ind);
 		pageSet.add(ind, referenceString.get(i));
 		index.add(referenceString.get(i));
-	
+
 		pageFaults++;
 		//lblPageFaults.setText("Page Faults:  "+pageFaults);
 		physicalSpacePanel.revalidate();
@@ -607,13 +609,13 @@ public class Visual {
 				l=hashIndex.get(p);
 			}	
 		}
-		
+
 		int pageIndex=pageSet.indexOf(page);
 		pageSet.remove(pageIndex);
 		hashIndex.remove(page);
 		pageSet.add(pageIndex,referenceString.get(i));
 		hashIndex.put(referenceString.get(i), i);
-		
+
 		pageFaults++;
 		//lblPageFaults.setText("Page Faults:  "+pageFaults);
 		((JLabel)physicalFrames.get(noOfFrames-1-pageIndex).getComponent(0)).setText("      Page  " + referenceString.get(i) +"     ");
@@ -624,6 +626,7 @@ public class Visual {
 	private class Frame extends JPanel{
 		private Frame panel;
 		private JPanel frame;
+		private JLabel frameNo;
 		Frame(){
 			super();
 			panel = this;
@@ -634,7 +637,9 @@ public class Visual {
 			flowLayout.setVgap(24);
 			flowLayout.setHgap(10);
 			frame.setBorder(new LineBorder(new Color(0, 0, 0)));
-			panel.add(frame);	
+			panel.add(frame);
+			frameNo=new JLabel("F");
+			frame.add(frameNo);
 		}
 
 	}   

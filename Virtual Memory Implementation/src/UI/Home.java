@@ -32,6 +32,7 @@ import java.io.PrintStream;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.SystemColor;
 
 public class Home {
 	Home window;
@@ -78,6 +79,7 @@ public class Home {
 			public void run() {
 				try {
 					Home window = new Home(null);
+					window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -216,22 +218,23 @@ public class Home {
 				lblProgSize.setText(Integer.toString(maxValue));
 			}
 		});
-		btnAnalyse.setBounds(661, 577, 114, 28);
+		btnAnalyse.setBounds(397, 592, 114, 28);
 		frame.getContentPane().add(btnAnalyse);
 
 		lblProgramSize = new JLabel("Pragram Size (Bytes)");
 		lblProgramSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblProgramSize.setForeground(Color.WHITE);
-		lblProgramSize.setBounds(737, 69, 127, 17);
+		lblProgramSize.setBounds(543, 592, 127, 17);
 		frame.getContentPane().add(lblProgramSize);
 
 		lblRamSize = new JLabel("RAM Size (Bytes)");
 		lblRamSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblRamSize.setForeground(Color.WHITE);
-		lblRamSize.setBounds(737, 107, 127, 14);
+		lblRamSize.setBounds(543, 620, 127, 14);
 		frame.getContentPane().add(lblRamSize);
 
 		btnExecute = new JButton("Execute");
+		btnExecute.setForeground(Color.WHITE);
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -251,16 +254,9 @@ public class Home {
 			}
 		});
 		btnExecute.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnExecute.setBackground(UIManager.getColor("Button.darkShadow"));
-		btnExecute.setBounds(445, 577, 114, 28);
+		btnExecute.setBackground(SystemColor.textHighlight);
+		btnExecute.setBounds(397, 661, 114, 28);
 		frame.getContentPane().add(btnExecute);
-
-		JLabel lblVirtualMemoryConcept = new JLabel("VIRTUAL MEMORY CONCEPT (Virtualization)");
-		lblVirtualMemoryConcept.setForeground(Color.WHITE);
-		lblVirtualMemoryConcept.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVirtualMemoryConcept.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblVirtualMemoryConcept.setBounds(145, 11, 529, 34);
-		frame.getContentPane().add(lblVirtualMemoryConcept);
 
 		lblStart = new JLabel("Start Adress");
 		lblStart.setForeground(Color.WHITE);
@@ -323,7 +319,7 @@ public class Home {
 				}
 			}
 		});
-		btnSave.setBounds(321, 577, 114, 28);
+		btnSave.setBounds(258, 592, 114, 28);
 		frame.getContentPane().add(btnSave);
 
 		btnLoadFile = new JButton(" Load File");
@@ -380,12 +376,12 @@ public class Home {
 
 		lblProgSize = new JLabel("");
 		lblProgSize.setForeground(Color.WHITE);
-		lblProgSize.setBounds(874, 70, 86, 14);
+		lblProgSize.setBounds(680, 592, 86, 14);
 		frame.getContentPane().add(lblProgSize);
 
 		lblRam = new JLabel("");
 		lblRam.setForeground(Color.WHITE);
-		lblRam.setBounds(871, 107, 89, 14);
+		lblRam.setBounds(680, 620, 89, 14);
 		frame.getContentPane().add(lblRam);
 	}
 }
