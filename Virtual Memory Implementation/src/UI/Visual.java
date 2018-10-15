@@ -62,7 +62,7 @@ public class Visual {
 	private ArrayList<JPanel> physicalFrames;
 	private Queue<Integer> index;
 	private HashMap<Integer,Integer> hashIndex;
-	private String[] replacementAlgos = { "FIFO", "LRU", "OPT" };
+	private String[] replacementAlgos = { "FIFO", "LRU" };
 	private String selectedAlgo=null;
 	private JPanel panel_3;
 	private JPanel panel_4;
@@ -360,7 +360,7 @@ public class Visual {
 
 		comboBoxAlgo = new JComboBox<String>();
 		comboBoxAlgo.setMaximumSize(new Dimension(80, 40));
-		comboBoxAlgo.setModel(new DefaultComboBoxModel<String>(new String[] {"FIFO", "LRU", "OPT"}));
+		comboBoxAlgo.setModel(new DefaultComboBoxModel<String>(new String[] {"FIFO", "LRU"}));
 		algoSelectionPanel.add(comboBoxAlgo);
 
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
@@ -553,6 +553,15 @@ public class Visual {
 					tempDesc+=" Page No. " + referenceString.get(referenceIndex) + " mappped to Frame No." + (pageSet.size()-1)+"<br>";
 					pageHitMiss+="PAGE FAULT<br>";
 				}
+				//if a given page in reference string exists in some frame
+				else{
+					pageHitMiss+="PAGE HIT<br>";
+					hashIndex.put(referenceString.get(referenceIndex),referenceIndex);				
+					noOfHits++;
+					int ind=pageSet.indexOf(referenceString.get(referenceIndex));
+					pageStatus.remove(ind);
+					pageStatus.add(ind,"H");
+				}
 				
 			}
 
@@ -600,20 +609,24 @@ public class Visual {
 				f.add(l1);
 				Page p = new Page(pageSet.get(pageNo).toString());
 				f.add(p);
-				Line l2 = new Line();
-				f.add(l2);
-				JLabel lbl=new JLabel(pageStatus.get(pageNo));
-				lbl.setOpaque(true);
-				lbl.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-				if(pageStatus.get(pageNo).equals("M"))
-					lbl.setForeground(Color.RED);
-				else
-					lbl.setForeground(Color.GREEN);
-				lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
-				lbl.setPreferredSize(new Dimension(10, 10));
-				lbl.setMaximumSize(new Dimension(10, 10)); 
-				lbl.setHorizontalTextPosition(lbl.CENTER);
-				f.add(lbl);
+				if(pageSet.get(pageNo).toString().equals(start) ||pageSet.get(pageNo).toString().equals(end) ){
+					Line l2 = new Line();
+					f.add(l2);
+					JLabel lbl=new JLabel(pageStatus.get(pageNo));
+					lbl.setOpaque(true);
+					lbl.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+					if(pageStatus.get(pageNo).equals("M"))
+						lbl.setForeground(Color.RED);
+					else
+						lbl.setForeground(Color.GREEN);
+					lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+					lbl.setPreferredSize(new Dimension(10, 10));
+					lbl.setMaximumSize(new Dimension(10, 10)); 
+					lbl.setHorizontalTextPosition(lbl.CENTER);
+					f.add(lbl);
+
+				}
+				
 				f.frame.setBackground(Color.RED);
 				physicalFrames.get(noOfFrames-1-i).setBackground(Color.RED);
 				((JLabel)physicalFrames.get(noOfFrames-1-i).getComponent(0)).setText("      Page  " + pageSet.get(pageNo).toString() +"     ");
