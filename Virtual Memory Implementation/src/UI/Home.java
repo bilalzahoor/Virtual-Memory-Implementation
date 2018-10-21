@@ -60,6 +60,7 @@ public class Home {
 	JButton addInstButton;
 	JLabel lblRam;
 	JLabel lblProgSize;
+	private JLabel lblDisplay;
 
 
 
@@ -78,7 +79,7 @@ public class Home {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Home window = new Home(null);
+					Home window = new Home();
 					window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -92,7 +93,7 @@ public class Home {
 	 * Create the application.
 	 * @param window2 
 	 */
-	public Home(Introduction window2) {
+	public Home() {
 		window = this;
 		initialize();
 		selectedRows = new ArrayList<JPanel>();
@@ -193,11 +194,13 @@ public class Home {
 		textFrame.setColumns(10);
 
 
-		btnAnalyse = new JButton("Analyse");
+		btnAnalyse = new JButton("Analyse Program");
 		btnAnalyse.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAnalyse.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnAnalyse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lblProgramSize.setVisible(true);
+				lblRamSize.setVisible(true);
 				lblRam.setText(textRam.getText());
 				for(MyPanel p:instructions){
 					int s = p.getStartAddress();
@@ -216,24 +219,31 @@ public class Home {
 					}
 				}
 				lblProgSize.setText(Integer.toString(maxValue));
+				int pr=Integer.parseInt(lblProgSize.getText());
+				int ra=Integer.parseInt(lblRam.getText());
+				if(pr>ra){
+					lblDisplay.setVisible(true);
+				}
 			}
 		});
-		btnAnalyse.setBounds(397, 592, 114, 28);
+		btnAnalyse.setBounds(397, 592, 152, 28);
 		frame.getContentPane().add(btnAnalyse);
 
-		lblProgramSize = new JLabel("Pragram Size (Bytes)");
+		lblProgramSize = new JLabel("Program Size (Bytes)");
 		lblProgramSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblProgramSize.setForeground(Color.WHITE);
-		lblProgramSize.setBounds(543, 592, 127, 17);
+		lblProgramSize.setBounds(563, 592, 127, 17);
+		lblProgramSize.setVisible(false);
 		frame.getContentPane().add(lblProgramSize);
 
 		lblRamSize = new JLabel("RAM Size (Bytes)");
 		lblRamSize.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblRamSize.setForeground(Color.WHITE);
-		lblRamSize.setBounds(543, 620, 127, 14);
+		lblRamSize.setBounds(563, 620, 127, 14);
+		lblRamSize.setVisible(false);
 		frame.getContentPane().add(lblRamSize);
 
-		btnExecute = new JButton("Execute");
+		btnExecute = new JButton("Execute & Visualize");
 		btnExecute.setForeground(Color.WHITE);
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -255,40 +265,40 @@ public class Home {
 		});
 		btnExecute.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnExecute.setBackground(SystemColor.textHighlight);
-		btnExecute.setBounds(397, 661, 114, 28);
+		btnExecute.setBounds(397, 661, 152, 28);
 		frame.getContentPane().add(btnExecute);
 
-		lblStart = new JLabel("Start Adress");
+		lblStart = new JLabel("Instruction Address");
 		lblStart.setForeground(Color.WHITE);
 		lblStart.setHorizontalAlignment(SwingConstants.LEFT);
-		lblStart.setBounds(315, 193, 100, 14);
+		lblStart.setBounds(303, 193, 112, 14);
 		frame.getContentPane().add(lblStart);
 
 		lblInstructionType = new JLabel("Instruction Type");
 		lblInstructionType.setForeground(Color.WHITE);
 		lblInstructionType.setHorizontalAlignment(SwingConstants.LEFT);
-		lblInstructionType.setBounds(419, 193, 115, 14);
+		lblInstructionType.setBounds(434, 193, 100, 14);
 		frame.getContentPane().add(lblInstructionType);
 
-		lblDestinationAdress = new JLabel("Destination Adress");
+		lblDestinationAdress = new JLabel("Accessed Address");
 		lblDestinationAdress.setForeground(Color.WHITE);
 		lblDestinationAdress.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDestinationAdress.setBounds(544, 193, 126, 14);
 		frame.getContentPane().add(lblDestinationAdress);
 
-		lblStartPage = new JLabel("Start Page");
+		lblStartPage = new JLabel("Instruction Page");
 		lblStartPage.setForeground(Color.WHITE);
 		lblStartPage.setHorizontalAlignment(SwingConstants.LEFT);
-		lblStartPage.setBounds(713, 193, 79, 14);
+		lblStartPage.setBounds(680, 193, 101, 14);
 		frame.getContentPane().add(lblStartPage);
 
-		lblDestinationAdress_1 = new JLabel("Destination Page");
+		lblDestinationAdress_1 = new JLabel("Accessed Page");
 		lblDestinationAdress_1.setForeground(Color.WHITE);
 		lblDestinationAdress_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDestinationAdress_1.setBounds(817, 193, 115, 14);
 		frame.getContentPane().add(lblDestinationAdress_1);
 
-		btnSave = new JButton("Save");
+		btnSave = new JButton("Save Program");
 		btnSave.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 12));
 
@@ -319,10 +329,10 @@ public class Home {
 				}
 			}
 		});
-		btnSave.setBounds(258, 592, 114, 28);
+		btnSave.setBounds(258, 592, 129, 28);
 		frame.getContentPane().add(btnSave);
 
-		btnLoadFile = new JButton(" Load File");
+		btnLoadFile = new JButton(" Load Program");
 		btnLoadFile.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnLoadFile.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnLoadFile.addActionListener(new ActionListener() {
@@ -371,18 +381,25 @@ public class Home {
 				}
 			}
 		});
-		btnLoadFile.setBounds(258, 132, 114, 28);
+		btnLoadFile.setBounds(258, 132, 127, 28);
 		frame.getContentPane().add(btnLoadFile);
 
 		lblProgSize = new JLabel("");
 		lblProgSize.setForeground(Color.WHITE);
-		lblProgSize.setBounds(680, 592, 86, 14);
+		lblProgSize.setBounds(695, 592, 86, 14);
 		frame.getContentPane().add(lblProgSize);
 
 		lblRam = new JLabel("");
 		lblRam.setForeground(Color.WHITE);
-		lblRam.setBounds(680, 620, 89, 14);
+		lblRam.setBounds(692, 620, 89, 14);
 		frame.getContentPane().add(lblRam);
+		
+		lblDisplay = new JLabel("Program address space crosses RAM address space!");
+		lblDisplay.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDisplay.setForeground(Color.RED);
+		lblDisplay.setBounds(563, 636, 397, 20);
+		lblDisplay.setVisible(false);
+		frame.getContentPane().add(lblDisplay);
 	}
 }
 class MyPanel extends JPanel{
@@ -617,4 +634,5 @@ class MyPanel extends JPanel{
 		});
 	}
 }
+
 
