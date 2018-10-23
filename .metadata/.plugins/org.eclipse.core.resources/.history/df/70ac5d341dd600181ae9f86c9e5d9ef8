@@ -467,7 +467,6 @@ public class Visual {
 			physicalPanel.add(pan);
 			pan.setLayout(new BoxLayout(pan, BoxLayout.X_AXIS));
 			JLabel lbl = new JLabel();
-			lbl.setForeground(Color.WHITE);
 			lbl.setMinimumSize(new Dimension(100,20));
 			lbl.setMaximumSize(new Dimension(100,20));
 			lbl.setPreferredSize(new Dimension(100,20));
@@ -611,19 +610,6 @@ public class Visual {
 				//No room in frames and the referenced page does not exist in frames i.e page fault occurred 
 				if (!pageSet.contains(referenceString.get(referenceIndex))){
 					if(selectedAlgo == null){
-					int pageNo=0;
-					for(int i=0;i<noOfFrames;i++){
-						Frame f = new Frame(Integer.toString(i));
-						if(pageNo<pageSet.size()){
-							Line l1 = new Line();
-							f.add(l1);
-							Page p = new Page(pageSet.get(pageNo).toString());
-							f.add(p);
-							f.frame.setBackground(Color.RED);
-							pageNo++;
-						}
-						instPanel.mappingPanel.add(f);
-					}
 						scrollToBottom(instructionScroll);
 						parentPanel.revalidate();
 						selectedAlgo = (String)JOptionPane.showInputDialog(null, "Choose any Replacement Algorithm ", "Page Fault Occured",
@@ -631,7 +617,6 @@ public class Visual {
 						algoSelectionPanel.setVisible(true);
 						((JComboBox<String>)algoSelectionPanel.getComponent(3)).setSelectedItem(selectedAlgo);
 						((JButton)algoSelectionPanel.getComponent(0)).setEnabled(false);
-						instPanel.mappingPanel.removeAll();
 					}
 					if(selectedAlgo.equals("FIFO")){
 						tempDesc+=fifo(referenceIndex,tempDesc);
@@ -758,7 +743,6 @@ public class Visual {
 			frame.setBorder(new LineBorder(new Color(0, 0, 0)));
 			panel.add(frame);
 			frameNo=new JLabel("F"+s);
-			frameNo.setForeground(Color.WHITE);
 			frame.add(frameNo);
 		}
 

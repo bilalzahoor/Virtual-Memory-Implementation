@@ -467,7 +467,6 @@ public class Visual {
 			physicalPanel.add(pan);
 			pan.setLayout(new BoxLayout(pan, BoxLayout.X_AXIS));
 			JLabel lbl = new JLabel();
-			lbl.setForeground(Color.WHITE);
 			lbl.setMinimumSize(new Dimension(100,20));
 			lbl.setMaximumSize(new Dimension(100,20));
 			lbl.setPreferredSize(new Dimension(100,20));

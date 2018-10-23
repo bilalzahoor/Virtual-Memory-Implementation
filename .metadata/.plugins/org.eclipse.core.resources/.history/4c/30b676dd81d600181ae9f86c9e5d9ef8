@@ -467,7 +467,6 @@ public class Visual {
 			physicalPanel.add(pan);
 			pan.setLayout(new BoxLayout(pan, BoxLayout.X_AXIS));
 			JLabel lbl = new JLabel();
-			lbl.setForeground(Color.WHITE);
 			lbl.setMinimumSize(new Dimension(100,20));
 			lbl.setMaximumSize(new Dimension(100,20));
 			lbl.setPreferredSize(new Dimension(100,20));
@@ -758,7 +757,7 @@ public class Visual {
 			frame.setBorder(new LineBorder(new Color(0, 0, 0)));
 			panel.add(frame);
 			frameNo=new JLabel("F"+s);
-			frameNo.setForeground(Color.WHITE);
+			frameNo.setBackground(Color.WHITE);
 			frame.add(frameNo);
 		}
 

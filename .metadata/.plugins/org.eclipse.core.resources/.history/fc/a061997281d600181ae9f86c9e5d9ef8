@@ -467,7 +467,6 @@ public class Visual {
 			physicalPanel.add(pan);
 			pan.setLayout(new BoxLayout(pan, BoxLayout.X_AXIS));
 			JLabel lbl = new JLabel();
-			lbl.setForeground(Color.WHITE);
 			lbl.setMinimumSize(new Dimension(100,20));
 			lbl.setMaximumSize(new Dimension(100,20));
 			lbl.setPreferredSize(new Dimension(100,20));
@@ -619,10 +618,15 @@ public class Visual {
 							f.add(l1);
 							Page p = new Page(pageSet.get(pageNo).toString());
 							f.add(p);
+							
+							}
 							f.frame.setBackground(Color.RED);
+							//physicalFrames.get(noOfFrames-1-i).setBackground(Color.RED);
+							//((JLabel)physicalFrames.get(noOfFrames-1-i).getComponent(0)).setText("      Page  " + pageSet.get(pageNo).toString() +"     ");
 							pageNo++;
 						}
 						instPanel.mappingPanel.add(f);
+						//frames.add(f);	
 					}
 						scrollToBottom(instructionScroll);
 						parentPanel.revalidate();
@@ -758,7 +762,6 @@ public class Visual {
 			frame.setBorder(new LineBorder(new Color(0, 0, 0)));
 			panel.add(frame);
 			frameNo=new JLabel("F"+s);
-			frameNo.setForeground(Color.WHITE);
 			frame.add(frameNo);
 		}
 

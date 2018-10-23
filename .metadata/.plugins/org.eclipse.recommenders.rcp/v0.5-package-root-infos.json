@@ -182,6 +182,19 @@
     "javaRuntime": true
   },
   {
+    "symbolicName": "jfreechart",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "3d2f62b2b54905ad54fe04a494fffe395457bcdd",
+    "jarFileModificationDate": "2018-10-09T20:52:33.757+05:30",
+    "location": "C:\\Users\\Ibn Zahoor\\Documents\\GitHub\\Virtual-Memory-Implementation\\Virtual Memory Implementation\\Lib\\jfreechart.jar",
+    "javaRuntime": false
+  },
+  {
     "symbolicName": "jar_files",
     "version": {
       "major": -1,
@@ -271,5 +284,31 @@
     "jarFileModificationDate": "2016-07-19T14:36:44.882+05:30",
     "location": "C:\\Program Files\\Java\\jdk1.8.0_92\\jre\\lib\\charsets.jar",
     "javaRuntime": true
+  },
+  {
+    "symbolicName": "com.itextpdf",
+    "version": {
+      "major": 5,
+      "minor": 1,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "6187c8a6ba07661f4f7a0c23533ec8b5f238c3b3",
+    "jarFileModificationDate": "2018-10-09T20:52:33.696+05:30",
+    "location": "C:\\Users\\Ibn Zahoor\\Documents\\GitHub\\Virtual-Memory-Implementation\\Virtual Memory Implementation\\Lib\\itextpdf-5.1.0.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jcommon-1.0.14",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "b3419451d0513b6b6ddfceeb303709caac1d7add",
+    "jarFileModificationDate": "2018-10-09T20:52:33.713+05:30",
+    "location": "C:\\Users\\Ibn Zahoor\\Documents\\GitHub\\Virtual-Memory-Implementation\\Virtual Memory Implementation\\Lib\\jcommon-1.0.14.jar",
+    "javaRuntime": false
   }
 ]

@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/USER/git/Virtual-Memory-Implementation/Virtual Memory Implementation/Virtual-Memory-Implementation/Virtual Memory Implementation/Lib/itextpdf-5.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/USER/git/Virtual-Memory-Implementation/Virtual Memory Implementation/Virtual-Memory-Implementation/Virtual Memory Implementation/Lib/jcommon-1.0.14.jar"/>
-	<classpathentry kind="lib" path="C:/Users/USER/git/Virtual-Memory-Implementation/Virtual Memory Implementation/Virtual-Memory-Implementation/Virtual Memory Implementation/Lib/jfreechart.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ibn Zahoor/Documents/GitHub/Virtual-Memory-Implementation/Virtual Memory Implementation/Lib/itextpdf-5.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ibn Zahoor/Documents/GitHub/Virtual-Memory-Implementation/Virtual Memory Implementation/Lib/jcommon-1.0.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ibn Zahoor/Documents/GitHub/Virtual-Memory-Implementation/Virtual Memory Implementation/Lib/jfreechart.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
