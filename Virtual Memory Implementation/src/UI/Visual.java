@@ -172,7 +172,7 @@ public class Visual {
 				if(!buttonNextInst.getText().equals("Save As PDF")){
 					executeInstruction();
 				}
-				else{
+				else{  // code of save as pdf
 					final java.awt.Image image = getImageFromPanel(parentPanel);
 
 					JFileChooser fileChooser = new JFileChooser();
@@ -194,25 +194,31 @@ public class Visual {
 		scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(1007, 330, 108, 240);
 		frame.getContentPane().add(scrollPane_2);
-		physicalSpacePanel = new JPanel();
+		
+		physicalSpacePanel = new JPanel();                      
 		scrollPane_2.setViewportView(physicalSpacePanel);
 		physicalSpacePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		physicalSpacePanel.setLayout(new BoxLayout(physicalSpacePanel, BoxLayout.X_AXIS));
-		physicalPanel = new JPanel();
+		
+		physicalPanel = new JPanel();                            
 		physicalSpacePanel.add(physicalPanel);
 		physicalPanel.setLayout(new BoxLayout(physicalPanel, BoxLayout.Y_AXIS));
+		
 		scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(1125, 330, 112, 240);
 		frame.getContentPane().add(scrollPane_3);
+		
 		JPanel logicalSpacePanel = new JPanel();
 		logicalSpacePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		scrollPane_3.setViewportView(logicalSpacePanel);
 		logicalSpacePanel.setLayout(new BoxLayout(logicalSpacePanel, BoxLayout.X_AXIS));
+		
 		logicalPanel = new JPanel();
 		logicalSpacePanel.add(logicalPanel);
 		logicalPanel.setForeground(new Color(240, 255, 255));
 		logicalPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		logicalPanel.setLayout(new BoxLayout(logicalPanel, BoxLayout.Y_AXIS));
+		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(null);
 		panel_6.setBackground(new Color(47, 79, 79));
@@ -220,36 +226,43 @@ public class Visual {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_6.setBounds(110, 60, 499, 30);
 		frame.getContentPane().add(panel_6);
+		
 		panel_3 = new JPanel();
 		panel_6.add(panel_3);
 		panel_3.setBackground(Color.GREEN);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 13));
+		
 		lblNewLabel_1 = new JLabel("Empty Frame");
 		panel_6.add(lblNewLabel_1);
 		lblNewLabel_1.setForeground(new Color(240, 255, 255));
 		lblNewLabel_1.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		panel_6.add(Box.createHorizontalStrut(20));
+		
 		panel_4 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_4.getLayout();
 		flowLayout_1.setVgap(13);
 		flowLayout_1.setHgap(10);
 		panel_6.add(panel_4);
 		panel_4.setBackground(Color.RED);
+		
 		JLabel lblNewLabel_2 = new JLabel("Occupied Frame");
 		panel_6.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		lblNewLabel_2.setForeground(new Color(240, 255, 255));
 		panel_6.add(Box.createHorizontalStrut(20));
+		
 		panel_5 = new JPanel();
 		panel_5.setBackground(Color.CYAN);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_5.getLayout();
 		flowLayout_2.setVgap(13);
 		flowLayout_2.setHgap(10);
 		panel_6.add(panel_5);
+		
 		JLabel lblNewLabel_3 = new JLabel("Demand Page");
 		panel_6.add(lblNewLabel_3);
 		lblNewLabel_3.setForeground(new Color(240, 255, 255));
 		lblNewLabel_3.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
+		
 		panel_7 = new JPanel();
 		panel_7.setBorder(null);
 		panel_7.setBackground(new Color(47, 79, 79));
@@ -257,20 +270,24 @@ public class Visual {
 		panel_7.setBounds(111, 101, 700, 41);
 		frame.getContentPane().add(panel_7);
 		panel_7.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
 		JLabel lblNewLabel_4 = new JLabel("Total Number Of Frames :");
 		panel_7.add(lblNewLabel_4);
 		lblNewLabel_4.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		lblNewLabel_4.setForeground(new Color(240, 255, 255));
+		
 		label = new JLabel("0");
 		label.setText(Integer.toString(noOfFrames));
 		label.setForeground(Color.CYAN);
 		label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_7.add(label);
 		panel_7.add(Box.createHorizontalStrut(20));
+		
 		lblNewLabel_6 = new JLabel("Total Number Of Pages :");
 		panel_7.add(lblNewLabel_6);
 		lblNewLabel_6.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 		lblNewLabel_6.setForeground(new Color(240, 255, 255));
+		
 		JLabel lblTotalPages = new JLabel("");
 		panel_7.add(lblTotalPages);
 		lblTotalPages.setText(Integer.toString(noOfPages));
@@ -322,7 +339,7 @@ public class Visual {
 		referenceStringPanel.setLayout(new BoxLayout(referenceStringPanel, BoxLayout.X_AXIS));
 		referenceStringParentPanel.add(referenceStringPanel);
 
-		panel_10 = new JPanel();
+		panel_10 = new JPanel();                        
 		panel_10.setBounds(996, 131, 258, 147);
 		frame.getContentPane().add(panel_10);
 		for(int i:referenceString){
@@ -538,19 +555,10 @@ public class Visual {
 			displayMsg.setFont(new Font("Tahoma", Font.BOLD, 18));
 			displayMsg.setForeground(Color.RED);
 			parentPanel.add(displayMsg);
-			if(selectedAlgo.equals("FIFO")){
-				algoFlag[0]=true;
-				dataset.addValue(pageFaults, "FIFO Page Faults ",selectedAlgo );
-				dataset.addValue(noOfHits, "FIFO Page Hits ", selectedAlgo);
-			}
-			if(selectedAlgo.equals("LRU")){
-				algoFlag[1]=true;
-				dataset.addValue(pageFaults, "LRU Page Faults ",selectedAlgo );
-				dataset.addValue(noOfHits, "LRU Page Hits ", selectedAlgo);
-			}
-			if(algoFlag[0]==true&&algoFlag[1]==true)
-				panel_10.setVisible(true);
-
+		
+			dataset.addValue(pageFaults, "Page Faults ",selectedAlgo );
+			dataset.addValue(noOfHits, "Page Hits ", selectedAlgo);
+			panel_10.setVisible(true);
 		}
 		
 
@@ -800,11 +808,13 @@ public class Visual {
 		private JLabel lblStartPage;
 		private JLabel lblDestinationPageNo;
 		private JLabel lblDestPage;
+		private JLabel lblInstnumber;
 		InstructionPanel panel;
 		private JPanel instructionPanel;
 		private JPanel instructionTypePanel;
 		private JPanel startPagePanel;
 		private JPanel destinationPagePanel;
+		
 		private JPanel mappingPanel;
 		public JLabel description;
 		public JLabel pf;
@@ -823,8 +833,16 @@ public class Visual {
 			instructionPanel.add(Box.createVerticalStrut(10));
 			
 			incPanel = new JPanel();
-			incPanel.setLayout(new BoxLayout(incPanel, BoxLayout.X_AXIS));
+			//incPanel.setLayout(new BoxLayout(incPanel, BoxLayout.X_AXIS));
 			instructionPanel.add(incPanel);
+			lblInstnumber=new JLabel("Instruction Number     :             ");
+			lblInstnumber.setFont(new Font("Tahoma",Font.BOLD,14));
+			//lblInstnumber.setForeground(Color.BLUE);
+			lblInstnumber.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			lblInstnumber.setHorizontalTextPosition(lblInstnumber.CENTER);
+			incPanel.add(lblInstnumber);
+			//instructionTypePanel.add(Box.createHorizontalStrut(20));
+			
 			lblIncrement=new JLabel();
 			lblIncrement.setText(Integer.toString(inc));
 			lblIncrement.setForeground(Color.BLUE);

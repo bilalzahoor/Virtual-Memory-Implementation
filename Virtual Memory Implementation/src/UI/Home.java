@@ -202,7 +202,7 @@ public class Home {
 				lblProgramSize.setVisible(true);
 				lblRamSize.setVisible(true);
 				lblRam.setText(textRam.getText());
-				for(MyPanel p:instructions){
+				for(MyPanel p:instructions){              
 					int s = p.getStartAddress();
 					if(s!=0){
 						int val=s;
@@ -221,7 +221,7 @@ public class Home {
 				lblProgSize.setText(Integer.toString(maxValue));
 				int pr=Integer.parseInt(lblProgSize.getText());
 				int ra=Integer.parseInt(lblRam.getText());
-				if(pr>ra){
+				if(pr>ra){                                 
 					lblDisplay.setVisible(true);
 				}
 			}
@@ -361,7 +361,7 @@ public class Home {
 								if(words[1].equals("0"))
 									myPanel.comboBox.setSelectedItem("Read/Write");
 								else
-									myPanel.comboBox.setSelectedItem("GoTo");
+									myPanel.comboBox.setSelectedItem("Transfer");
 								myPanel.setDestinationAddress(words[2]);
 								myPanel.setStartPage((words[3]));
 								myPanel.setDestinationPage(words[4]);
@@ -441,7 +441,7 @@ class MyPanel extends JPanel{
 		textDPage.setText(sp);
 	}
 
-	MyPanel(Home h){
+	MyPanel(Home h){                     
 		super();
 		home=h;
 		panel=this;
@@ -464,6 +464,7 @@ class MyPanel extends JPanel{
 		panel.add(checkBox);
 
 		textStart = new JTextField();
+		textStart.setHorizontalAlignment(JTextField.CENTER);
 		textStart.addFocusListener(new FocusListener(){
 
 
@@ -487,13 +488,13 @@ class MyPanel extends JPanel{
 		panel.add(Box.createHorizontalStrut(10));
 		comboBox = new JComboBox<String>();
 		comboBox.addItem("Read/Write");
-		comboBox.addItem("GoTo");
+		comboBox.addItem("Transfer");
 		comboBox.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String s =textDest.getText().trim();
-				if(panel.comboBox.getSelectedItem().equals("GoTo") && s.compareTo("")!=0){
+				if(panel.comboBox.getSelectedItem().equals("Transfer") && s.compareTo("")!=0){
 					for(MyPanel p:home.instructions){
 						if(p.getStartAddress()==Integer.parseInt(s)){
 							instructionExists=true;
@@ -521,6 +522,7 @@ class MyPanel extends JPanel{
 
 
 		textDest = new JTextField();
+		textDest.setHorizontalAlignment(JTextField.CENTER);
 		textDest.getDocument().addDocumentListener(new DocumentListener(){
 
 			public void insertUpdate(DocumentEvent e) {
@@ -574,7 +576,7 @@ class MyPanel extends JPanel{
 					int start= Integer.parseInt(r);
 					//int result=start/page;
 				//	textDPage.setText(Integer.toString(result));
-					if(panel.comboBox.getSelectedItem().equals("GoTo")){
+					if(panel.comboBox.getSelectedItem().equals("Transfer")){
 						for(MyPanel p:home.instructions){
 							if(p.getStartAddress()==Integer.parseInt(r)){
 								instructionExists=true;
