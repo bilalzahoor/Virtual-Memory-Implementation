@@ -44,7 +44,7 @@ public class Home {
 	private int maxValue=0;
 	private JTextField textRam;
 	public static JTextField textFrame;
-	private JButton btnAnalyse;
+	public static JButton btnAnalyse;
 	private JLabel lblProgramSize;
 	private JLabel lblRamSize;
 	private JButton btnExecute;
@@ -115,22 +115,33 @@ public class Home {
 		addInstButton.setBackground(UIManager.getColor("Button.darkShadow"));
 		addInstButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MyPanel r = new MyPanel(window);
-				panel_1.add(r);
-				if(instructions.size()!=0){
-
-					int s = instructions.get(instructions.size()-1).getStartAddress();
-
-					if(s >= 0){
-
-						int val = s;
-						val++;	
-
-						r.setStartAddress(Integer.toString(val));
-					}
+				if(textRam.getText().equals("") || textFrame.getText().equals("")){
+					lblDisplay.setText("Ram size and Frame size must not be empty");
+					lblDisplay.setVisible(true);
 				}
-				instructions.add(r);
-				panel_1.revalidate();
+				else{
+					Home.btnAnalyse.setEnabled(false);
+					lblDisplay.setText("Program address space crosses RAM address space!");
+					lblDisplay.setVisible(false);
+					textRam.setEnabled(false);
+					textFrame.setEnabled(false);
+					MyPanel r = new MyPanel(window);
+					panel_1.add(r);
+					if(instructions.size()!=0){
+	
+						int s = instructions.get(instructions.size()-1).getStartAddress();
+	
+						if(s >= 0){
+	
+							int val = s;
+							val++;	
+	
+							r.setStartAddress(Integer.toString(val));
+						}
+					}
+					instructions.add(r);
+					panel_1.revalidate();
+				}
 			}
 		});
 		addInstButton.setBounds(98, 214, 152, 29);
@@ -199,6 +210,7 @@ public class Home {
 		btnAnalyse.setBackground(UIManager.getColor("Button.darkShadow"));
 		btnAnalyse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnExecute.setEnabled(true);
 				lblProgramSize.setVisible(true);
 				lblRamSize.setVisible(true);
 				lblRam.setText(textRam.getText());
@@ -245,6 +257,7 @@ public class Home {
 
 		btnExecute = new JButton("Execute & Visualize");
 		btnExecute.setForeground(Color.WHITE);
+		btnExecute.setEnabled(false);
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -367,6 +380,8 @@ public class Home {
 								myPanel.setDestinationPage(words[4]);
 								instructions.add(myPanel);
 								panel_1.revalidate();
+								textRam.setEnabled(false);
+								textFrame.setEnabled(false);
 							}
 						}
 					} catch (FileNotFoundException e) {
@@ -495,6 +510,7 @@ class MyPanel extends JPanel{
 				// TODO Auto-generated method stub
 				String s =textDest.getText().trim();
 				if(panel.comboBox.getSelectedItem().equals("Transfer") && s.compareTo("")!=0){
+					Home.btnAnalyse.setEnabled(false);
 					for(MyPanel p:home.instructions){
 						if(p.getStartAddress()==Integer.parseInt(s)){
 							instructionExists=true;
@@ -547,6 +563,7 @@ class MyPanel extends JPanel{
 					int start= Integer.parseInt(r);
 					int result=start/page;
 					textDPage.setText(Integer.toString(result));
+					Home.btnAnalyse.setEnabled(true);
 				}
 
 			}

@@ -634,12 +634,19 @@ public class Visual {
 					}
 						scrollToBottom(instructionScroll);
 						parentPanel.revalidate();
+						try{
 						selectedAlgo = (String)JOptionPane.showInputDialog(null, "Choose any Replacement Algorithm ", "Page Fault Occured",
 								JOptionPane.INFORMATION_MESSAGE,null, replacementAlgos, replacementAlgos[0]);
 						algoSelectionPanel.setVisible(true);
 						((JComboBox<String>)algoSelectionPanel.getComponent(3)).setSelectedItem(selectedAlgo);
 						((JButton)algoSelectionPanel.getComponent(0)).setEnabled(false);
 						instPanel.mappingPanel.removeAll();
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+						if(selectedAlgo == null){
+							selectedAlgo="FIFO";
+						}
 					}
 					if(selectedAlgo.equals("FIFO")){
 						tempDesc+=fifo(referenceIndex,tempDesc);
